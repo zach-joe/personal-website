@@ -1,28 +1,29 @@
 ---
-import "@/styles/reset.css"
-import "@/styles/fonts.css"
-import "@/styles/color.css"
-import "@/styles/typography.css"
-import "@/styles/typography-headings.css"
-import "@/styles/typography-inline.css"
-import "@/styles/typography-lists.css"
-import "@/styles/typography-block.css"
-import "@/styles/typography-tables.css"
-import "@/styles/typography-math.css"
-import "@/styles/callout.css"
-import "@/styles/layout.css"
-import "@/styles/icon-button.css"
-import "@/styles/bar.css"
-import "@/styles/shape.css"
+// import "@/styles/reset.css"
+import "@/styles/fonts.css";
+import "@/styles/color.css";
+import "@/styles/global.css";
+import "@/styles/typography.css";
+import "@/styles/typography-headings.css";
+import "@/styles/typography-inline.css";
+import "@/styles/typography-lists.css";
+import "@/styles/typography-block.css";
+import "@/styles/typography-tables.css";
+import "@/styles/typography-math.css";
+import "@/styles/callout.css";
+import "@/styles/layout.css";
+import "@/styles/icon-button.css";
+import "@/styles/bar.css";
+import "@/styles/shape.css";
 
-import Footer from "@/components/Footer.astro"
-import MetaHead from "@/components/MetaHead.astro"
-import Sidebar from "@/components/Sidebar.astro"
-import { SITE } from "@/consts"
+import Footer from "@/components/Footer.astro";
+import MetaHead from "@/components/MetaHead.astro";
+import Sidebar from "@/components/Sidebar.astro";
+import { SITE } from "@/consts";
 
-type Props = { crumbs?: { label: string; href: string }[] }
+type Props = { crumbs?: { label: string; href: string }[] };
 
-const { crumbs } = Astro.props
+const { crumbs } = Astro.props;
 ---
 
 <html lang={SITE.locale} dir={SITE.dir}>
@@ -33,17 +34,23 @@ const { crumbs } = Astro.props
     <page-grid>
       <page-header>
         <page-nav>
-          <Sidebar crumbs={crumbs}
-            ><slot name="actions" slot="actions" /></Sidebar
-          >
+          <Sidebar crumbs={crumbs}>
+            <slot name="actions" slot="actions" />
+          </Sidebar>
         </page-nav>
         {Astro.slots.has("toc") && (
-            <page-toc><slot name="toc" /></page-toc>
-          )}
+          <page-toc>
+            <slot name="toc" />
+          </page-toc>
+        )}
       </page-header>
       <page-content>
-        <main><slot /></main>
-        <page-footer><Footer /></page-footer>
+        <main>
+          <slot />
+        </main>
+        <page-footer>
+          <Footer />
+        </page-footer>
       </page-content>
     </page-grid>
   </body>

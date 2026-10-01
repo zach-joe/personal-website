@@ -1,16 +1,16 @@
 ---
-import Logo from "@/assets/logo.svg"
-import ThemeToggle from "@/components/ThemeToggle.astro"
-import { NAVIGATION, SITE } from "@/consts"
-import { normalizePath } from "@/lib/utils"
+import Logo from "@/assets/logo.svg";
+import ThemeToggle from "@/components/ThemeToggle.astro";
+import { NAVIGATION, SITE } from "@/consts";
+import { normalizePath } from "@/lib/utils";
 
-type Props = { crumbs?: { label: string; href: string }[] }
+type Props = { crumbs?: { label: string; href: string }[] };
 
-const { crumbs = [] } = Astro.props
-const pathname = normalizePath(Astro.url.pathname) || "/"
+const { crumbs = [] } = Astro.props;
+const pathname = normalizePath(Astro.url.pathname) || "/";
 const section = NAVIGATION.find(
   ({ href }) => pathname === href || pathname.startsWith(`${href}/`),
-)
+);
 ---
 
 <aside data-bar>
@@ -22,14 +22,16 @@ const section = NAVIGATION.find(
     <nav>
       <ul>
         {NAVIGATION.map((item) => (
-            <li>
-              <a
-                href={item.href}
-                aria-current={pathname === item.href ? "page" : undefined}
-              >
-                {item.label}
-              </a>
-              {item === section && crumbs.length > 0 && pathname !== item.href && (
+          <li>
+            <a
+              href={item.href}
+              aria-current={pathname === item.href ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+            {item === section &&
+              crumbs.length > 0 &&
+              pathname !== item.href && (
                 <ul>
                   {crumbs.map((crumb, i) => (
                     <li data-depth={i ? 1 : undefined}>
@@ -45,19 +47,19 @@ const section = NAVIGATION.find(
                   ))}
                 </ul>
               )}
+          </li>
+        ))}
+        {!section &&
+          crumbs.map((crumb, i) => (
+            <li data-depth={i ? 1 : undefined}>
+              <a
+                href={crumb.href}
+                aria-current={i === crumbs.length - 1 ? "page" : undefined}
+              >
+                {crumb.label}
+              </a>
             </li>
           ))}
-        {!section &&
-            crumbs.map((crumb, i) => (
-              <li data-depth={i ? 1 : undefined}>
-                <a
-                  href={crumb.href}
-                  aria-current={i === crumbs.length - 1 ? "page" : undefined}
-                >
-                  {crumb.label}
-                </a>
-              </li>
-            ))}
       </ul>
     </nav>
   </sidebar-inner>

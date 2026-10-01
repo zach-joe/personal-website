@@ -1,15 +1,16 @@
-import { defineConfig } from "astro/config"
-import sitemap from "@astrojs/sitemap"
-import { satteri } from "@astrojs/markdown-satteri"
+import { defineConfig } from "astro/config";
+import sitemap from "@astrojs/sitemap";
+import { satteri } from "@astrojs/markdown-satteri";
 import {
   blockExpressiveCode,
   inlineExpressiveCode,
-} from "./src/lib/expressive-code"
-import { temmlMath } from "./src/lib/math"
-import { calloutDirective } from "./src/lib/callout"
-import { externalLinks } from "./src/lib/external-links"
-import { headingNamespace } from "./src/lib/heading-namespace"
-import { headingAnchors } from "./src/lib/heading-anchors"
+} from "./src/lib/expressive-code";
+import { temmlMath } from "./src/lib/math";
+import { calloutDirective } from "./src/lib/callout";
+import { externalLinks } from "./src/lib/external-links";
+import { headingNamespace } from "./src/lib/heading-namespace";
+import { headingAnchors } from "./src/lib/heading-anchors";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   site: "https://astro-erudite.vercel.app",
@@ -36,4 +37,7 @@ export default defineConfig({
       ],
     }),
   },
-})
+  vite: {
+    plugins: [tailwindcss()],
+  },
+});

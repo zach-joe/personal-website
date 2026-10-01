@@ -28,8 +28,8 @@
   );
   --grid-column-width: calc(
     (
-        min(100%, var(--grid-max-width)) -
-          (var(--grid-columns) + 1) * var(--grid-gutter)
+        min(100%, var(--grid-max-width)) - (var(--grid-columns) + 1) *
+          var(--grid-gutter)
       ) /
       var(--grid-columns)
   );
@@ -53,9 +53,7 @@ html {
     --bar-nav-height: calc(2rem + 2 * var(--space-2xs) + 2px);
     --bar-toc-height: 0px;
     scroll-padding-block-start: calc(
-      var(--bar-nav-height) +
-      var(--bar-toc-height) +
-      var(--space-2xs)
+      var(--bar-nav-height) + var(--bar-toc-height) + var(--space-2xs)
     );
 
     &:has(page-toc) {

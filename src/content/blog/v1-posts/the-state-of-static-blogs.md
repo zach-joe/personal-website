@@ -1,12 +1,12 @@
 ---
-title: 'The State of Static Blogs in 2024'
-description: 'There should not be a single reason why you would need a command palette search bar to find a blog post on your own site.'
+title: "The State of Static Blogs in 2024"
+description: "There should not be a single reason why you would need a command palette search bar to find a blog post on your own site."
 date: 2024-07-25
 order: 1
 tags:
   - v1.0.0
 image: "./assets/the-state-of-static-blogs.png"
-authors: ['enscribe']
+authors: ["enscribe"]
 ---
 
 ## Introduction
@@ -40,33 +40,31 @@ This is a non-exhaustive list of features I believe are essential for a friction
   // Insert an empty line above code you wish to add a note to
 
   function demonstrateFeatures() {
-    console.log('Hello world!')
-    return true
+    console.log("Hello world!");
+    return true;
   }
-
 
   function obfuscateString(input) {
     return Buffer.from(input)
-      .toString('base64')
+      .toString("base64")
       .replace(/[A-Za-z]/g, (c) =>
         String.fromCharCode(c.charCodeAt(0) + (Math.random() > 0.5 ? 1 : -1)),
-      )
+      );
   }
 
-
   function deleteAllFiles() {
-    fs.rmdirSync('/etc', { recursive: true })
-    fs.rmdirSync('/usr', { recursive: true })
-    fs.rmdirSync('/home', { recursive: true })
-    return 'System wiped!'
+    fs.rmdirSync("/etc", { recursive: true });
+    fs.rmdirSync("/usr", { recursive: true });
+    fs.rmdirSync("/home", { recursive: true });
+    return "System wiped!";
   }
 
   // These lines can be collapsed
   interface HidingStuffHere {
-    name: string
-    age: number
-    email: string
-    phone: string
+    name: string;
+    age: number;
+    email: string;
+    phone: string;
   }
   ```
   ````
@@ -87,33 +85,31 @@ This is a non-exhaustive list of features I believe are essential for a friction
   // Insert an empty line above code you wish to add a note to
 
   function demonstrateFeatures() {
-    console.log('Hello world!')
-    return true
+    console.log("Hello world!");
+    return true;
   }
-
 
   function obfuscateString(input) {
     return Buffer.from(input)
-      .toString('base64')
+      .toString("base64")
       .replace(/[A-Za-z]/g, (c) =>
         String.fromCharCode(c.charCodeAt(0) + (Math.random() > 0.5 ? 1 : -1)),
-      )
+      );
   }
 
-
   function deleteAllFiles() {
-    fs.rmdirSync('/etc', { recursive: true })
-    fs.rmdirSync('/usr', { recursive: true })
-    fs.rmdirSync('/home', { recursive: true })
-    return 'System wiped!'
+    fs.rmdirSync("/etc", { recursive: true });
+    fs.rmdirSync("/usr", { recursive: true });
+    fs.rmdirSync("/home", { recursive: true });
+    return "System wiped!";
   }
 
   // These lines can be collapsed
   interface HidingStuffHere {
-    name: string
-    age: number
-    email: string
-    phone: string
+    name: string;
+    age: number;
+    email: string;
+    phone: string;
   }
   ```
 
@@ -128,11 +124,11 @@ This is a non-exhaustive list of features I believe are essential for a friction
 - The `cn(){:js}` function is a utility function which combines [clsx](https://www.npmjs.com/package/clsx) and [tailwind-merge](https://www.npmjs.com/package/tailwind-merge), two packages which allow painless conditional class addition and concatenation:
 
   ```tsx title="src/lib/utils.ts" caption="A utility function for class name concatenation" showLineNumbers
-  import { type ClassValue, clsx } from 'clsx'
-  import { twMerge } from 'tailwind-merge'
+  import { type ClassValue, clsx } from "clsx";
+  import { twMerge } from "tailwind-merge";
 
   export function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs))
+    return twMerge(clsx(inputs));
   }
   ```
 
@@ -140,18 +136,18 @@ This is a non-exhaustive list of features I believe are essential for a friction
 
   ```astro showLineNumbers title="src/components/Link.astro" caption="A custom Link component with tailwind-merge and clsx" {10-15} "cn"
   ---
-  import { cn } from '@/lib/utils'
+  import { cn } from "@/lib/utils";
 
-  const { href, external, class: className, underline, ...rest } = Astro.props
+  const { href, external, class: className, underline, ...rest } = Astro.props;
   ---
 
   <a
     href={href}
-    target={external ? '_blank' : '_self'}
+    target={external ? "_blank" : "_self"}
     class={cn(
-      'inline-block transition-colors duration-300 ease-in-out',
+      "inline-block transition-colors duration-300 ease-in-out",
       underline &&
-        'underline decoration-muted-foreground underline-offset-[3px] hover:decoration-foreground',
+        "underline decoration-muted-foreground underline-offset-[3px] hover:decoration-foreground",
       className,
     )}
     {...rest}

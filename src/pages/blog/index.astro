@@ -1,17 +1,21 @@
 ---
-import BlogCard from "@/components/BlogCard.astro"
-import MetaPage from "@/components/MetaPage.astro"
-import Layout from "@/layouts/Layout.astro"
-import { getPosts } from "@/lib/content"
+import BlogCard from "@/components/BlogCard.astro";
+import MetaPage from "@/components/MetaPage.astro";
+import Layout from "@/layouts/Layout.astro";
+import { getPosts } from "@/lib/content";
 
-const posts = await getPosts()
+const posts = await getPosts();
 ---
 
 <Layout>
   <MetaPage slot="head" title="Blog" />
-  <ul>
-    {posts.map((post) => <BlogCard post={post} />)}
-  </ul>
+  <h1 class="text-4xl my-4">Work In Progress...</h1>
+  <p>Please stay tuned for my first blog post in the future!</p>
+  <!-- <ul>
+    {posts.map((post) => (
+      <BlogCard post={post} />
+    ))}
+  </ul> -->
 </Layout>
 
 <style>

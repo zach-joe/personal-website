@@ -1,11 +1,15 @@
 ---
-import MoonIcon from "@/assets/icons/moon.svg"
-import SunIcon from "@/assets/icons/sun.svg"
+import MoonIcon from "@/assets/icons/moon.svg";
+import SunIcon from "@/assets/icons/sun.svg";
 ---
 
 <button id="theme-toggle" data-icon-button aria-label="Toggle theme">
-  <light-icon><SunIcon /></light-icon>
-  <dark-icon><MoonIcon /></dark-icon>
+  <light-icon>
+    <SunIcon />
+  </light-icon>
+  <dark-icon>
+    <MoonIcon />
+  </dark-icon>
 </button>
 
 <style is:global>
@@ -46,16 +50,16 @@ import SunIcon from "@/assets/icons/sun.svg"
 
 <script>
   const toggleTheme = () => {
-    const root = document.documentElement
+    const root = document.documentElement;
     const dark =
       root.dataset.theme === "dark" ||
       (!root.dataset.theme &&
-        matchMedia("(prefers-color-scheme: dark)").matches)
-    const theme = dark ? "light" : "dark"
-    root.dataset.theme = theme
-    localStorage.theme = theme
-  }
+        matchMedia("(prefers-color-scheme: dark)").matches);
+    const theme = dark ? "light" : "dark";
+    root.dataset.theme = theme;
+    localStorage.theme = theme;
+  };
 
-  const button = document.getElementById("theme-toggle")
-  if (button) button.onclick = toggleTheme
+  const button = document.getElementById("theme-toggle");
+  if (button) button.onclick = toggleTheme;
 </script>

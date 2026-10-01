@@ -1,6 +1,6 @@
 ---
-title: 'v1.5.0: “A Callout Component for Nerds”'
-description: 'A quick update introduces our first content-based component: the callout!'
+title: "v1.5.0: “A Callout Component for Nerds”"
+description: "A quick update introduces our first content-based component: the callout!"
 date: 2025-04-24
 order: 3
 tags:
@@ -175,15 +175,15 @@ Within any `src/content/blog/**/*.mdx` file, you can now use the `Callout` compo
 
 ```mdx title="src/content/blog/callouts-component/index.mdx" add={10}
 ---
-title: 'v1.5.0: “A Callout Component for Nerds”'
-description: 'A quick update introduces our first content-based component: the callout!'
+title: "v1.5.0: “A Callout Component for Nerds”"
+description: "A quick update introduces our first content-based component: the callout!"
 date: 2025-04-24
-tags: ['v1.5.0']
-image: './1200x630.png'
-authors: ['enscribe']
+tags: ["v1.5.0"]
+image: "./1200x630.png"
+authors: ["enscribe"]
 ---
 
-import Callout from '@/components/callout.astro'
+import Callout from "@/components/callout.astro";
 ```
 
 Then, you can use the component like so. This is just an example but you should actually read the text since it's relevant to the article:
@@ -222,21 +222,21 @@ I believe they do this so they can keep you within the Markdown-like syntax syst
 
 Callout only supports three props:
 
-| Prop | Description | Default |
-| ---- | ----------- | ------- |
-| `title` | The title of the callout | `undefined{:js}` |
-| `variant` | The variant of the callout | `"note"{:js}` |
-| `defaultOpen` | Whether the callout `<details>{:html}` box is open by default | `true{:js}` |
+| Prop          | Description                                                   | Default          |
+| ------------- | ------------------------------------------------------------- | ---------------- |
+| `title`       | The title of the callout                                      | `undefined{:js}` |
+| `variant`     | The variant of the callout                                    | `"note"{:js}`    |
+| `defaultOpen` | Whether the callout `<details>{:html}` box is open by default | `true{:js}`      |
 
 I've added an insane amount of variants to this component for potentially any use case you could think of. For the more general ones, you can use the following:
 
-| Variant | Usage |
-| ------- | ----- |
-| Note | For general information or comments that don't fit other categories |
-| Tip | For helpful advice or shortcuts related to the topic at hand |
-| Warning | For potential pitfalls or common misconceptions |
-| Danger | For things that could potentially be destructive or harmful |
-| Important | For things that are important to the reader's understanding |
+| Variant   | Usage                                                               |
+| --------- | ------------------------------------------------------------------- |
+| Note      | For general information or comments that don't fit other categories |
+| Tip       | For helpful advice or shortcuts related to the topic at hand        |
+| Warning   | For potential pitfalls or common misconceptions                     |
+| Danger    | For things that could potentially be destructive or harmful         |
+| Important | For things that are important to the reader's understanding         |
 
 ## Generic callouts
 
@@ -251,19 +251,19 @@ You can quickly format your code by pressing <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + 
 
 Additional shortcuts include:
 
-| Action | Windows/Linux | Mac |
-| ------ | ------------- | --- |
-| Search | <kbd>Ctrl</kbd> + <kbd>F</kbd> | <kbd>Cmd</kbd> + <kbd>F</kbd> |
-| Replace | <kbd>Ctrl</kbd> + <kbd>H</kbd> | <kbd>Cmd</kbd> + <kbd>H</kbd> |
+| Action   | Windows/Linux                                   | Mac                                               |
+| -------- | ----------------------------------------------- | ------------------------------------------------- |
+| Search   | <kbd>Ctrl</kbd> + <kbd>F</kbd>                  | <kbd>Cmd</kbd> + <kbd>F</kbd>                     |
+| Replace  | <kbd>Ctrl</kbd> + <kbd>H</kbd>                  | <kbd>Cmd</kbd> + <kbd>H</kbd>                     |
 | Save all | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>S</kbd> | <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>S</kbd> |
-::::
+| ::::     |
 
 ::::warning[Cross-browser compatibility issues]
 This API is **not supported** in Internet Explorer and has limited support in older browsers. Make sure to include appropriate polyfills.
 
 ```js title="polyfill.js"
 if (!Object.fromEntries) {
-  Object.fromEntries = function(entries) {
+  Object.fromEntries = function (entries) {
     const obj = {};
     for (const [key, value] of entries) {
       obj[key] = value;
@@ -305,4 +305,5 @@ A migration example looks like the following:
 - app.on('event', callback);
 + app.on('event', { handler: callback, options: { once: true } });
 ```
+
 ::::

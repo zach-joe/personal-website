@@ -1,9 +1,9 @@
-import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections"
-import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers"
+import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
+import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import {
   createRenderer,
   type SatteriExpressiveCodeOptions,
-} from "satteri-expressive-code"
+} from "satteri-expressive-code";
 
 export const ecOptions: SatteriExpressiveCodeOptions = {
   themes: ["github-light", "github-dark"],
@@ -55,6 +55,6 @@ export const ecOptions: SatteriExpressiveCodeOptions = {
       closedFontFamily: "var(--font-sans)",
     },
   },
-}
+};
 
-export const ecRenderer = createRenderer(ecOptions)
+export const ecRenderer = createRenderer(ecOptions);

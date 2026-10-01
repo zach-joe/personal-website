@@ -26,31 +26,31 @@ astro-erudite is [enscribe](https://enscribe.dev)'s opinionated, unstyled static
 
 Below are some fantastic examples of websites based on this template. If you wish to add your site to this list, open a [pull request](https://github.com/jktrn/astro-erudite/pulls)!
 
-| Site | Author | Tags | Source |
-|-|-|-|-|
-| [enscribe.dev](https://enscribe.dev) | [@jktrn](https://github.com/jktrn) | portfolio, interactive | [→](https://github.com/jktrn/enscribe.dev) |
-| [emile.sh](https://emile.sh) | [@echoghi](https://github.com/echoghi) | minimal, flexoki | [→](https://github.com/echoghi/v5) |
-| [decentparadox.me](https://decentparadox.me) | [@decentparadox](https://github.com/decentparadox) | portfolio, sci-fi | [→](https://github.com/decentparadox/decentparadox.me) |
-| [flocto.github.io](https://flocto.github.io/) | [@flocto](https://github.com/flocto) | blog | [→](https://github.com/flocto/flocto.github.io) |
-| [dumbprism.me](https://www.dumbprism.me/) | [@dumbprism](https://github.com/dumbprism) | portfolio, bento | [→](https://github.com/dumbprism/dumbprism-portfolio) |
-| [hyuki.dev](https://hyuki.dev/) | [@snow0406](https://github.com/snow0406) | minimal, blog | [→](https://github.com/Snow0406/hyuki.dev) |
-| [ldd.cc](https://ldd.cc/) | [@xJoyLu](https://github.com/xjoylu) | blog | [→](https://ldd.cc/) |
-| [rezarezvan.com](https://rezarezvan.com/) | [@rezaarezvan](https://github.com/rezaarezvan) | academic, blog | [→](https://rezarezvan.com/) |
-| [blog.z0x.ca](https://blog.z0x.ca/) | [@z0x](https://z0x.ca) | minimal | [→](https://git.z0x.ca/z0x/blog.z0x.ca/) |
-| [angelaytchan.net](https://angelaytchan.net/) | [@wispyplant](https://github.com/wispyplant) | portfolio, art | [→](https://github.com/wispyplant/wispyplant.github.io) |
-| [kaezr.xyz](https://kaezr.xyz/) | [@kaezrr](https://github.com/kaezrr) | minimal, portfolio | [→](https://github.com/kaezrr/webfolio) |
-| [worldwidewong](https://worldwidewong.vercel.app) | [@brendanwong-web](https://github.com/brendanwong-web) | portfolio, gallery | [→](https://github.com/brendanwong-web/worldwidewong) |
-| [bgajjala.dev](https://bgajjala.dev) | [@bgajjala8](https://github.com/bgajjala8) | minimal, blog | [→](https://github.com/bgajjala8/bgajjala.dev) |
-| [ankitz007.vercel.app](https://ankitz007.vercel.app) | [@ankitz007](https://github.com/ankitz007) | blog | [→](https://github.com/ankitz007/webfolio) |
-| [sadman.ca](https://sadman.ca) | [@sadmanca](https://github.com/sadmanca) | blog, media | [→](https://github.com/sadmanca/blogv3) |
-| [marcel-to.vercel.app](https://marcel-to.vercel.app) | [@Marcel-TO](https://github.com/Marcel-TO) | portfolio, docs | [→](https://github.com/Marcel-TO/marcel-to-website) |
-| [merox.dev](https://merox.dev) | [@meroxdotdev](https://github.com/meroxdotdev) | blog, devops, homelab | [→](https://github.com/meroxdotdev/merox) |
-| [Off by One](https://justoffbyone.com) | [@cduruk](https://github.com/cduruk) | engineering, blog | [→](https://github.com/cduruk/offbyone) |
-| [holywater.dev](https://holywater.dev) | [@holywater2372](https://github.com/holywater2372) | cybersecurity, blog | [→](https://github.com/holywater2372/holywater.dev) |
-| [theinfinull.com](https://theinfinull.com) | [@theinfinull](https://github.com/theinfinull) | dev, portfolio, blog | [→](https://github.com/theinfinull/portfolio) |
-| [chai-pin-zheng.xyz](https://www.chai-pin-zheng.xyz/) | [@Ducksss](https://github.com/Ducksss) | portfolio, interactive, blog, ascii | [→](https://github.com/Ducksss/ascii-astro-erudite) |
-| [nightxade.dev](https://nightxade.dev) | [@nightxade](https://github.com/nightxade) | blog, portfolio | [→](https://github.com/nightxade/nightsite)
-| [xingpingcn.top](https://xingpingcn.top) | [@xingpingcn](https://github.com/xingpingcn) | blog, chinese | [→](https://github.com/xingpingcn/newblog) |
+| Site                                                  | Author                                                 | Tags                                | Source                                                  |
+| ----------------------------------------------------- | ------------------------------------------------------ | ----------------------------------- | ------------------------------------------------------- |
+| [enscribe.dev](https://enscribe.dev)                  | [@jktrn](https://github.com/jktrn)                     | portfolio, interactive              | [→](https://github.com/jktrn/enscribe.dev)              |
+| [emile.sh](https://emile.sh)                          | [@echoghi](https://github.com/echoghi)                 | minimal, flexoki                    | [→](https://github.com/echoghi/v5)                      |
+| [decentparadox.me](https://decentparadox.me)          | [@decentparadox](https://github.com/decentparadox)     | portfolio, sci-fi                   | [→](https://github.com/decentparadox/decentparadox.me)  |
+| [flocto.github.io](https://flocto.github.io/)         | [@flocto](https://github.com/flocto)                   | blog                                | [→](https://github.com/flocto/flocto.github.io)         |
+| [dumbprism.me](https://www.dumbprism.me/)             | [@dumbprism](https://github.com/dumbprism)             | portfolio, bento                    | [→](https://github.com/dumbprism/dumbprism-portfolio)   |
+| [hyuki.dev](https://hyuki.dev/)                       | [@snow0406](https://github.com/snow0406)               | minimal, blog                       | [→](https://github.com/Snow0406/hyuki.dev)              |
+| [ldd.cc](https://ldd.cc/)                             | [@xJoyLu](https://github.com/xjoylu)                   | blog                                | [→](https://ldd.cc/)                                    |
+| [rezarezvan.com](https://rezarezvan.com/)             | [@rezaarezvan](https://github.com/rezaarezvan)         | academic, blog                      | [→](https://rezarezvan.com/)                            |
+| [blog.z0x.ca](https://blog.z0x.ca/)                   | [@z0x](https://z0x.ca)                                 | minimal                             | [→](https://git.z0x.ca/z0x/blog.z0x.ca/)                |
+| [angelaytchan.net](https://angelaytchan.net/)         | [@wispyplant](https://github.com/wispyplant)           | portfolio, art                      | [→](https://github.com/wispyplant/wispyplant.github.io) |
+| [kaezr.xyz](https://kaezr.xyz/)                       | [@kaezrr](https://github.com/kaezrr)                   | minimal, portfolio                  | [→](https://github.com/kaezrr/webfolio)                 |
+| [worldwidewong](https://worldwidewong.vercel.app)     | [@brendanwong-web](https://github.com/brendanwong-web) | portfolio, gallery                  | [→](https://github.com/brendanwong-web/worldwidewong)   |
+| [bgajjala.dev](https://bgajjala.dev)                  | [@bgajjala8](https://github.com/bgajjala8)             | minimal, blog                       | [→](https://github.com/bgajjala8/bgajjala.dev)          |
+| [ankitz007.vercel.app](https://ankitz007.vercel.app)  | [@ankitz007](https://github.com/ankitz007)             | blog                                | [→](https://github.com/ankitz007/webfolio)              |
+| [sadman.ca](https://sadman.ca)                        | [@sadmanca](https://github.com/sadmanca)               | blog, media                         | [→](https://github.com/sadmanca/blogv3)                 |
+| [marcel-to.vercel.app](https://marcel-to.vercel.app)  | [@Marcel-TO](https://github.com/Marcel-TO)             | portfolio, docs                     | [→](https://github.com/Marcel-TO/marcel-to-website)     |
+| [merox.dev](https://merox.dev)                        | [@meroxdotdev](https://github.com/meroxdotdev)         | blog, devops, homelab               | [→](https://github.com/meroxdotdev/merox)               |
+| [Off by One](https://justoffbyone.com)                | [@cduruk](https://github.com/cduruk)                   | engineering, blog                   | [→](https://github.com/cduruk/offbyone)                 |
+| [holywater.dev](https://holywater.dev)                | [@holywater2372](https://github.com/holywater2372)     | cybersecurity, blog                 | [→](https://github.com/holywater2372/holywater.dev)     |
+| [theinfinull.com](https://theinfinull.com)            | [@theinfinull](https://github.com/theinfinull)         | dev, portfolio, blog                | [→](https://github.com/theinfinull/portfolio)           |
+| [chai-pin-zheng.xyz](https://www.chai-pin-zheng.xyz/) | [@Ducksss](https://github.com/Ducksss)                 | portfolio, interactive, blog, ascii | [→](https://github.com/Ducksss/ascii-astro-erudite)     |
+| [nightxade.dev](https://nightxade.dev)                | [@nightxade](https://github.com/nightxade)             | blog, portfolio                     | [→](https://github.com/nightxade/nightsite)             |
+| [xingpingcn.top](https://xingpingcn.top)              | [@xingpingcn](https://github.com/xingpingcn)           | blog, chinese                       | [→](https://github.com/xingpingcn/newblog)              |
 
 ## Features
 
@@ -92,13 +92,13 @@ Below are some fantastic examples of websites based on this template. If you wis
 
 5. Open your browser and visit `http://localhost:4321` to get started. The following commands are also available:
 
-   | Command                | Description                                       |
-   | ---------------------- | ------------------------------------------------- |
-   | `bun run build`        | Build the production site to `dist/`              |
-   | `bun run preview`      | Preview the built project locally                 |
-   | `bun run astro`        | Run Astro CLI commands                            |
+   | Command                | Description                                          |
+   | ---------------------- | ---------------------------------------------------- |
+   | `bun run build`        | Build the production site to `dist/`                 |
+   | `bun run preview`      | Preview the built project locally                    |
+   | `bun run astro`        | Run Astro CLI commands                               |
    | `bun run format`       | Format all files using [Biome](https://biomejs.dev/) |
-   | `bun run format:check` | Check formatting without writing                  |
+   | `bun run format:check` | Check formatting without writing                     |
 
 ### Site configuration
 
@@ -112,17 +112,17 @@ export const SITE = {
   dir: "ltr",
   defaultPageImage: "/static/opengraph-image.png",
   defaultPostImage: "/static/1200x630.png",
-} as const
+} as const;
 
 export const NAVIGATION = [
   { href: "/blog", label: "Blog" },
   // ...
-]
+];
 
 export const SOCIALS: { href: string; label: string; icon: SvgComponent }[] = [
   { href: "https://github.com/jktrn", label: "GitHub", icon: GitHub },
   // ...
-]
+];
 ```
 
 Your site's production URL is configurable in `astro.config.ts` as the `site` field, which is used for the sitemap, RSS feed, and canonical URLs.
@@ -133,14 +133,14 @@ Colors are defined in `src/styles/color.css` using the [Radix Colors](https://ww
 
 ```css
 :root {
-  --gray-1:  light-dark(#fcfcfc, #111111);
+  --gray-1: light-dark(#fcfcfc, #111111);
   /* ... */
   --gray-12: light-dark(#202020, #eeeeee);
 
-  --background:       var(--gray-1);
-  --foreground:       var(--gray-12);
+  --background: var(--gray-1);
+  --foreground: var(--gray-12);
   --muted-foreground: var(--gray-11);
-  --border:           var(--gray-6);
+  --border: var(--gray-6);
   /* ... */
 
   color-scheme: light dark;
@@ -183,16 +183,16 @@ tags:
 
 The blog post schema is defined as follows:
 
-| Field         | Type (Zod)               | Requirements                                                                                                                                                                  | Required |
-| ------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
-| `title`       | `string`                 | Should be ≤60 characters.                                                                                                                                                     | Yes      |
-| `description` | `string`                 | Should be ≤155 characters.                                                                                                                                                    | Yes      |
-| `date`        | `coerce.date()`          | Must be in `YYYY-MM-DD` format.                                                                                                                                               | Yes      |
-| `order`       | `number`                 | Sort order for subposts within a series. Defaults to `0` if not provided.                                                                                                     | Optional |
-| `tags`        | `string[]`               | Preferably use kebab-case for these.                                                                                                                                          | Optional |
-| `authors`     | `reference("authors")[]` | Each entry must match the id of a file in `src/content/authors/` (e.g. if their file is named `jane-doe.md`, use `jane-doe` in the array). Validated at build time.           | Yes      |
-| `image`       | `image()`                | Should be exactly 1200px &times; 630px.                                                                                                                                       | Optional |
-| `draft`       | `boolean`                | Defaults to `false` if not provided. You can also prefix a filename with `_` to hide it from the content loader entirely.                                                     | Optional |
+| Field         | Type (Zod)               | Requirements                                                                                                                                                        | Required |
+| ------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `title`       | `string`                 | Should be ≤60 characters.                                                                                                                                           | Yes      |
+| `description` | `string`                 | Should be ≤155 characters.                                                                                                                                          | Yes      |
+| `date`        | `coerce.date()`          | Must be in `YYYY-MM-DD` format.                                                                                                                                     | Yes      |
+| `order`       | `number`                 | Sort order for subposts within a series. Defaults to `0` if not provided.                                                                                           | Optional |
+| `tags`        | `string[]`               | Preferably use kebab-case for these.                                                                                                                                | Optional |
+| `authors`     | `reference("authors")[]` | Each entry must match the id of a file in `src/content/authors/` (e.g. if their file is named `jane-doe.md`, use `jane-doe` in the array). Validated at build time. | Yes      |
+| `image`       | `image()`                | Should be exactly 1200px &times; 630px.                                                                                                                             | Optional |
+| `draft`       | `boolean`                | Defaults to `false` if not provided. You can also prefix a filename with `_` to hide it from the content loader entirely.                                           | Optional |
 
 ### Subposts
 
@@ -244,14 +244,14 @@ socials:
 
 The author schema is defined as follows:
 
-| Field      | Type (Zod)                                 | Requirements                                                                                                                                                             | Required |
-| ---------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
-| `name`     | `string`                                   | n/a                                                                                                                                                                      | Yes      |
-| `pronouns` | `string`                                   | n/a                                                                                                                                                                      | Optional |
-| `avatar`   | `url()` or `string.startsWith("/")`        | Should be either a valid URL or a path starting with `/`. | Yes      |
-| `bio`      | `string`                                   | n/a                                                                                                                                                                      | Optional |
-| `mail`     | `email()`                                  | Must be a valid email address.                                                                                                                                           | Optional |
-| `socials`  | `record(string, url())`                    | A map of any label you like to a valid URL. Each label is matched to an icon in `src/components/SocialIcons.astro`.                                                      | Optional |
+| Field      | Type (Zod)                          | Requirements                                                                                                        | Required |
+| ---------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------- | -------- |
+| `name`     | `string`                            | n/a                                                                                                                 | Yes      |
+| `pronouns` | `string`                            | n/a                                                                                                                 | Optional |
+| `avatar`   | `url()` or `string.startsWith("/")` | Should be either a valid URL or a path starting with `/`.                                                           | Yes      |
+| `bio`      | `string`                            | n/a                                                                                                                 | Optional |
+| `mail`     | `email()`                           | Must be a valid email address.                                                                                      | Optional |
+| `socials`  | `record(string, url())`             | A map of any label you like to a valid URL. Each label is matched to an icon in `src/components/SocialIcons.astro`. | Optional |
 
 ### Projects
 

@@ -71,6 +71,7 @@ On desktop, the `<SubpostsSidebar>{:tsx}` sticks to the right column on your scr
 ## Implementing sticky mobile navigation
 
 The original mobile table of contents was a simple collapsible element that lived within the post content. This created several usability issues:
+
 1. Users had no sense of how much content remained other than implying it based on the length of the browser scrollbar
 2. Once you scrolled past the TOC, you lose the ability to quickly navigate to other sections of the post without scrolling back up to the inline TOC
 3. Mobile users should have the exact same experience as desktop users in terms of navigation, and as of now the desktop experience was better (due to the sticky aside TOC)
@@ -90,9 +91,11 @@ Say that we have a post with the following structure:
 
 ```markdown
 ## Part 1
+
 [500 lines of content]
 
 ## Part 2
+
 [500 lines of content]
 ```
 
@@ -136,17 +139,19 @@ The naming is interesting but I felt like it was the most intuitive to me. Basic
 ```javascript title="src/components/TOCHeader.astro" startLineNumber=123
 function buildHeadingJurisdictions() {
   headingElements = Array.from(
-    document.querySelectorAll('.prose h2, .prose h3, .prose h4, .prose h5, .prose h6')
-  )
-  
+    document.querySelectorAll(
+      ".prose h2, .prose h3, .prose h4, .prose h5, .prose h6",
+    ),
+  );
+
   jurisdictions = headingElements.map((heading, index) => {
-    const nextHeading = headingElements[index + 1]
+    const nextHeading = headingElements[index + 1];
     return {
       id: heading.id,
       start: heading.offsetTop,
-      end: nextHeading ? nextHeading.offsetTop : document.body.scrollHeight
-    }
-  })
+      end: nextHeading ? nextHeading.offsetTop : document.body.scrollHeight,
+    };
+  });
 }
 ```
 
@@ -161,13 +166,17 @@ One of the more interesting decisions I made was to display all sections as comm
 
 :::note[Example]
 Recall the previous example's scenario:
+
 ```markdown
 ## Part 1
+
 [500 lines of content]
 
 ## Part 2
+
 [500 lines of content]
 ```
+
 If we saw 250 lines of Part 1 and 250 lines of Part 2, then the text snippet in the mobile TOC would read "Part 1, Part 2".
 :::
 
@@ -186,19 +195,19 @@ By showing all visible sections, we give users complete awareness of their posit
 The circular progress indicator provides immediate visual feedback about reading progress without requiring any interaction:
 
 ```javascript title="src/components/TOCHeader.astro" startLineNumber=216
-  function updateProgressCircle() {
-    if (!progressCircleElement) return
-    const scrollableDistance =
-      document.documentElement.scrollHeight - window.innerHeight
-    const scrollProgress =
-      scrollableDistance > 0
-        ? Math.min(Math.max(window.scrollY / scrollableDistance, 0), 1)
-        : 0
-    progressCircleElement.style.strokeDashoffset = (
-      PROGRESS_CIRCLE_CIRCUMFERENCE *
-      (1 - scrollProgress)
-    ).toString()
-  }
+function updateProgressCircle() {
+  if (!progressCircleElement) return;
+  const scrollableDistance =
+    document.documentElement.scrollHeight - window.innerHeight;
+  const scrollProgress =
+    scrollableDistance > 0
+      ? Math.min(Math.max(window.scrollY / scrollableDistance, 0), 1)
+      : 0;
+  progressCircleElement.style.strokeDashoffset = (
+    PROGRESS_CIRCLE_CIRCUMFERENCE *
+    (1 - scrollProgress)
+  ).toString();
+}
 ```
 
 The progress is calculated as a ratio of current scroll position to total scrollable distance, then applied as a stroke-dashoffset to create the filling effect.
@@ -209,11 +218,11 @@ The subposts feature leverages Astro's file-based routing to automatically detec
 
 ```typescript title="src/lib/data-utils.ts" startLineNumber=161
 export function isSubpost(postId: string): boolean {
-  return postId.includes('/')
+  return postId.includes("/");
 }
 
 export function getParentId(subpostId: string): string {
-  return subpostId.split('/')[0]
+  return subpostId.split("/")[0];
 }
 ```
 
@@ -225,6 +234,7 @@ One of the more intricate parts of this update was rethinking navigation. The or
 
 :::note[Example]
 Consider this structure:
+
 ```
 blog/
   getting-started.mdx
@@ -236,60 +246,59 @@ blog/
 ```
 
 Navigation depends on context:
+
 - From `getting-started.mdx`: next goes to `react-tutorial/index.mdx`
 - From `react-tutorial/components.mdx`: next goes to `state.mdx`, previous to `index.mdx`
 - From `react-tutorial/state.mdx`: previous goes to `components.mdx`, parent goes to `index.mdx`
-:::
+  :::
 
 Here's how we handle this complexity:
 
 ```typescript title="src/lib/data-utils.ts" startLineNumber=40
 export async function getAdjacentPosts(currentId: string): Promise<{
-  newer: CollectionEntry<'blog'> | null
-  older: CollectionEntry<'blog'> | null
-  parent: CollectionEntry<'blog'> | null
+  newer: CollectionEntry<"blog"> | null;
+  older: CollectionEntry<"blog"> | null;
+  parent: CollectionEntry<"blog"> | null;
 }> {
-  const allPosts = await getAllPosts()
+  const allPosts = await getAllPosts();
 
   if (isSubpost(currentId)) {
-    const parentId = getParentId(currentId)
-    const parent = allPosts.find((post) => post.id === parentId) || null
+    const parentId = getParentId(currentId);
+    const parent = allPosts.find((post) => post.id === parentId) || null;
 
     // Get all sibling subposts
-    const posts = await getCollection('blog')
+    const posts = await getCollection("blog");
     const subposts = posts
       .filter(
         (post) =>
           isSubpost(post.id) &&
           getParentId(post.id) === parentId &&
-          !post.data.draft
+          !post.data.draft,
       )
-      .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf())
+      .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
 
-    const currentIndex = subposts.findIndex((post) => post.id === currentId)
-    
+    const currentIndex = subposts.findIndex((post) => post.id === currentId);
+
     return {
-      newer: currentIndex < subposts.length - 1 
-        ? subposts[currentIndex + 1] 
-        : null,
-      older: currentIndex > 0 
-        ? subposts[currentIndex - 1] 
-        : null,
+      newer:
+        currentIndex < subposts.length - 1 ? subposts[currentIndex + 1] : null,
+      older: currentIndex > 0 ? subposts[currentIndex - 1] : null,
       parent,
-    }
+    };
   }
 
   // For parent posts, only navigate among other parent-level posts
-  const parentPosts = allPosts.filter((post) => !isSubpost(post.id))
-  const currentIndex = parentPosts.findIndex((post) => post.id === currentId)
+  const parentPosts = allPosts.filter((post) => !isSubpost(post.id));
+  const currentIndex = parentPosts.findIndex((post) => post.id === currentId);
 
   return {
     newer: currentIndex > 0 ? parentPosts[currentIndex - 1] : null,
-    older: currentIndex < parentPosts.length - 1 
-      ? parentPosts[currentIndex + 1] 
-      : null,
+    older:
+      currentIndex < parentPosts.length - 1
+        ? parentPosts[currentIndex + 1]
+        : null,
     parent: null,
-  }
+  };
 }
 ```
 
@@ -299,59 +308,59 @@ As a TL;DR, subposts should only navigate among siblings and should be able to g
 
 - The breadcrumb component required careful thought to handle three distinct cases:
 
-    ```astro title="src/pages/blog/[...id].astro" startLineNumber=70
-    <Breadcrumbs
-      items={[
-        { href: '/blog', label: 'Blog', icon: 'lucide:library-big' },
-        ...(isCurrentSubpost && parentPost
-          ? [
-              {
-                href: `/blog/${parentPost.id}`,
-                label: parentPost.data.title,
-                icon: 'lucide:book-open',
-              },
-              {
-                href: `/blog/${currentPostId}`,
-                label: post.data.title,
-                icon: 'lucide:file-text',
-              },
-            ]
-          : [
-              {
-                href: `/blog/${currentPostId}`,
-                label: post.data.title,
-                icon: 'lucide:book-open-text',
-              },
-            ]),
-      ]}
-    />
-    ```
+  ```astro title="src/pages/blog/[...id].astro" startLineNumber=70
+  <Breadcrumbs
+    items={[
+      { href: "/blog", label: "Blog", icon: "lucide:library-big" },
+      ...(isCurrentSubpost && parentPost
+        ? [
+            {
+              href: `/blog/${parentPost.id}`,
+              label: parentPost.data.title,
+              icon: "lucide:book-open",
+            },
+            {
+              href: `/blog/${currentPostId}`,
+              label: post.data.title,
+              icon: "lucide:file-text",
+            },
+          ]
+        : [
+            {
+              href: `/blog/${currentPostId}`,
+              label: post.data.title,
+              icon: "lucide:book-open-text",
+            },
+          ]),
+    ]}
+  />
+  ```
 
-    We append `-text` to `book-open` or `file` (for parent posts and subposts, respectively) to indicate the active post by differentiating it from inactive icons which would lack the text within the icon.
+  We append `-text` to `book-open` or `file` (for parent posts and subposts, respectively) to indicate the active post by differentiating it from inactive icons which would lack the text within the icon.
 
 - The main blog listing (alongside other listings, e.g. filtering by tags, filtering by author) should exclude subposts to avoid cluttering the feed:
 
-    ```typescript title="src/lib/data-utils.ts" startLineNumber=7
-    export async function getAllPosts(): Promise<CollectionEntry<'blog'>[]> {
-    const posts = await getCollection('blog')
+  ```typescript title="src/lib/data-utils.ts" startLineNumber=7
+  export async function getAllPosts(): Promise<CollectionEntry<"blog">[]> {
+    const posts = await getCollection("blog");
     return posts
-        .filter((post) => !post.data.draft && !isSubpost(post.id))
-        .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-    }
-    ```
+      .filter((post) => !post.data.draft && !isSubpost(post.id))
+      .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  }
+  ```
 
-    Without this filter, your blog listing would show every subpost as a top-level entry, defeating the purpose of hierarchical organization.
+  Without this filter, your blog listing would show every subpost as a top-level entry, defeating the purpose of hierarchical organization.
 
 - Desktop and mobile require fundamentally different approaches for displaying the subpost hierarchy. On desktop, we have the luxury of a persistent sidebar. On mobile, screen real estate demands integration with the sticky header system. This required careful slot management in the top-level `Layout.astro`:
 
-    ```astro title="src/layouts/Layout.astro"
-    <div class="bg-background/50 sticky top-0 z-50 border-b backdrop-blur-sm">
-        <Header />
-        <slot name="subposts-navigation" />
-        <slot name="table-of-contents" />
-    </div>
-    ```
+  ```astro title="src/layouts/Layout.astro"
+  <div class="bg-background/50 sticky top-0 z-50 border-b backdrop-blur-sm">
+    <Header />
+    <slot name="subposts-navigation" />
+    <slot name="table-of-contents" />
+  </div>
+  ```
 
-    The order is semantic here since subposts navigation comes before table of contents, creating a logical hierarchy of navigation options from broad (which post/subpost) to specific (which section).
+  The order is semantic here since subposts navigation comes before table of contents, creating a logical hierarchy of navigation options from broad (which post/subpost) to specific (which section).
 
 - Not much testing has been done for deep nesting but my assumption is that it shouldn't work. This is intentional to maintain simplicity, since at that point you might as well use a documentation site rather than a blogging site.

@@ -1,13 +1,13 @@
 ---
-import ArrowLeft from "@/assets/icons/arrow-left.svg"
-import ArrowRight from "@/assets/icons/arrow-right.svg"
-import ScrollToTop from "@/components/ScrollToTop.astro"
-import type { CollectionEntry } from "astro:content"
+import ArrowLeft from "@/assets/icons/arrow-left.svg";
+import ArrowRight from "@/assets/icons/arrow-right.svg";
+import ScrollToTop from "@/components/ScrollToTop.astro";
+import type { CollectionEntry } from "astro:content";
 
-type Post = CollectionEntry<"blog">
-type Props = { prev?: Post; next?: Post }
+type Post = CollectionEntry<"blog">;
+type Props = { prev?: Post; next?: Post };
 
-const { prev, next } = Astro.props
+const { prev, next } = Astro.props;
 ---
 
 <post-actions>

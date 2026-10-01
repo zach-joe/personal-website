@@ -1,6 +1,6 @@
-import { glob } from "astro/loaders"
-import { defineCollection, reference } from "astro:content"
-import { z } from "astro/zod"
+import { glob } from "astro/loaders";
+import { defineCollection, reference } from "astro:content";
+import { z } from "astro/zod";
 
 const authors = defineCollection({
   loader: glob({
@@ -15,7 +15,7 @@ const authors = defineCollection({
     mail: z.email().optional(),
     socials: z.record(z.string(), z.url()).optional(),
   }),
-})
+});
 
 const blog = defineCollection({
   loader: glob({
@@ -33,7 +33,7 @@ const blog = defineCollection({
       image: image().optional(),
       draft: z.boolean().optional(),
     }),
-})
+});
 
 const projects = defineCollection({
   loader: glob({
@@ -50,6 +50,6 @@ const projects = defineCollection({
       startDate: z.coerce.date().optional(),
       endDate: z.coerce.date().optional(),
     }),
-})
+});
 
-export const collections = { blog, authors, projects }
+export const collections = { blog, authors, projects };

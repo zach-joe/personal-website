@@ -40,21 +40,21 @@ What you are now looking at is the culmination of all the lessons I've learned t
 
 The description of this post claims that v2 is better in every way I know how to measure, so here are the measurements. Both versions were benchmarked with the same blog posts on the same machine, with v1 pinned to `v1.6.3`:
 
-| | v1 | v2 | Δ |
-| - | -: | -: | -: |
-| JavaScript shipped | 334.4kb | 6.9kb | <delta-down>↓98%</delta-down> |
-| Largest JavaScript file | 174.4kb <dim-span>(React)</dim-span> | 2.6kb <dim-span>(ToC)</dim-span> | <delta-down>↓99%</delta-down> |
-| CSS shipped | 106.5kb | 30.3kb | <delta-down>↓72%</delta-down> |
-| Homepage transfer size | 480.3kb | 238.5kb | <delta-down>↓50%</delta-down> |
-| Homepage requests | 14 | 8 | <delta-down>↓43%</delta-down> |
-| Homepage main-thread work | 0.19s | 0.08s | <delta-down>↓58%</delta-down> |
-| Series read: page loads | 6 | 1 | <delta-down>↓83%</delta-down> |
-| Series read: transfer | 1.52mb | 1.03mb | <delta-down>↓32%</delta-down> |
-| Build time <dim-span>(warm)</dim-span> | 7.2s | 3.5s | <delta-down>↓51%</delta-down> |
-| Build time <dim-span>(per page)</dim-span> | 360ms | 194ms | <delta-down>↓46%</delta-down> |
-| Direct dependencies | 34 | 15 | <delta-down>↓56%</delta-down> |
-| Installed packages | 782 | 318 | <delta-down>↓59%</delta-down> |
-| `node_modules` size | 334mb | 273mb | <delta-down>↓18%</delta-down> |
+|                                            |                                   v1 |                               v2 |                             Δ |
+| ------------------------------------------ | -----------------------------------: | -------------------------------: | ----------------------------: |
+| JavaScript shipped                         |                              334.4kb |                            6.9kb | <delta-down>↓98%</delta-down> |
+| Largest JavaScript file                    | 174.4kb <dim-span>(React)</dim-span> | 2.6kb <dim-span>(ToC)</dim-span> | <delta-down>↓99%</delta-down> |
+| CSS shipped                                |                              106.5kb |                           30.3kb | <delta-down>↓72%</delta-down> |
+| Homepage transfer size                     |                              480.3kb |                          238.5kb | <delta-down>↓50%</delta-down> |
+| Homepage requests                          |                                   14 |                                8 | <delta-down>↓43%</delta-down> |
+| Homepage main-thread work                  |                                0.19s |                            0.08s | <delta-down>↓58%</delta-down> |
+| Series read: page loads                    |                                    6 |                                1 | <delta-down>↓83%</delta-down> |
+| Series read: transfer                      |                               1.52mb |                           1.03mb | <delta-down>↓32%</delta-down> |
+| Build time <dim-span>(warm)</dim-span>     |                                 7.2s |                             3.5s | <delta-down>↓51%</delta-down> |
+| Build time <dim-span>(per page)</dim-span> |                                360ms |                            194ms | <delta-down>↓46%</delta-down> |
+| Direct dependencies                        |                                   34 |                               15 | <delta-down>↓56%</delta-down> |
+| Installed packages                         |                                  782 |                              318 | <delta-down>↓59%</delta-down> |
+| `node_modules` size                        |                                334mb |                            273mb | <delta-down>↓18%</delta-down> |
 
 The series rows measure reading every post of [the v1 release series](#regarding-subposts) end to end. v1 needs a full navigation per subpost, while v2 renders the whole chain as one continuous page.
 
@@ -125,16 +125,17 @@ The following is our `package.json` diff showing the changes:
 ```
 
 We can divvy our removed packages into four categories:
+
 1. **Things that existed to render HTML that I could have totally done myself**.
-    - `react`, `react-dom`, `@astrojs/react`, `@types/react`, `@types/react-dom`, `radix-ui`: I've completely removed shadcn/ui from this project. I basically was only using `<Avatar>{:tsx}`, `<ScrollArea>{:tsx}`, and `<Pagination>{:tsx}`, which we can own ourselves for much cheaper. **Ownership** is a principle that I now really enjoy, and even though shadcn/ui kind of claims "ownership" as its leading philosophy <dim-span>(you are, after all, copying the components yourself)</dim-span>, these come baked in with Radix and Lucide and so you don't really own anything <dim-span>(this says a lot about our society)</dim-span>. There's absolutely no point bundling these.
-    - `lucide-react`, `astro-icon`, `@iconify-json/lucide`: These are icon libraries that shadcn/ui was also using. I've learned to opt out of these icon libraries <dim-span>(which are more <abbr title="Developer experience">DX</abbr> than anything)</dim-span> and to simply have SVGs in an `icons/` folder with the ones we actually use.
+   - `react`, `react-dom`, `@astrojs/react`, `@types/react`, `@types/react-dom`, `radix-ui`: I've completely removed shadcn/ui from this project. I basically was only using `<Avatar>{:tsx}`, `<ScrollArea>{:tsx}`, and `<Pagination>{:tsx}`, which we can own ourselves for much cheaper. **Ownership** is a principle that I now really enjoy, and even though shadcn/ui kind of claims "ownership" as its leading philosophy <dim-span>(you are, after all, copying the components yourself)</dim-span>, these come baked in with Radix and Lucide and so you don't really own anything <dim-span>(this says a lot about our society)</dim-span>. There's absolutely no point bundling these.
+   - `lucide-react`, `astro-icon`, `@iconify-json/lucide`: These are icon libraries that shadcn/ui was also using. I've learned to opt out of these icon libraries <dim-span>(which are more <abbr title="Developer experience">DX</abbr> than anything)</dim-span> and to simply have SVGs in an `icons/` folder with the ones we actually use.
 2. **Things that existed to manage and fix issues with other things shouldn't have existed in the first place**. These are all things that don't actually do anything to the website, but rather do things to each other.
-    - `tailwind-merge`, `clsx`, `class-variance-authority`: These are utility libraries that all mutate and fiddle around with Tailwind in specific ways. These are now entirely useless, because I've [removed Tailwind](#regarding-tailwind)!
-    - `patch-package`: This existed to hold a `postinstall` patch against a dependency that had a bug I couldn't wait out. A build step whose only job is to rewrite another package on the way in is a smell, and none of v2's dependencies need patching.
+   - `tailwind-merge`, `clsx`, `class-variance-authority`: These are utility libraries that all mutate and fiddle around with Tailwind in specific ways. These are now entirely useless, because I've [removed Tailwind](#regarding-tailwind)!
+   - `patch-package`: This existed to hold a `postinstall` patch against a dependency that had a bug I couldn't wait out. A build step whose only job is to rewrite another package on the way in is a smell, and none of v2's dependencies need patching.
 3. **Things that've fallen out of my favor**. These aren't necessarily entirely bad, but have been personally demerited by me these past couple years and have been replaced by alternatives I prefer.
-    - `prettier`, `prettier-plugin-astro`, `prettier-plugin-astro-organize-imports`, `prettier-plugin-tailwindcss`: I've replaced this all with [`@biomejs/biome`](https://biomejs.dev/). It's just better, faster, and stronger for this use case.
-    - `tailwindcss`, `@tailwindcss/vite`: As mentioned above, I've [removed Tailwind](#regarding-tailwind).
-    - `@astrojs/mdx`: I've removed MDX support entirely. See [Regarding MDX](#regarding-mdx).
+   - `prettier`, `prettier-plugin-astro`, `prettier-plugin-astro-organize-imports`, `prettier-plugin-tailwindcss`: I've replaced this all with [`@biomejs/biome`](https://biomejs.dev/). It's just better, faster, and stronger for this use case.
+   - `tailwindcss`, `@tailwindcss/vite`: As mentioned above, I've [removed Tailwind](#regarding-tailwind).
+   - `@astrojs/mdx`: I've removed MDX support entirely. See [Regarding MDX](#regarding-mdx).
 4. **The Markdown pipeline** (`@astrojs/markdown-remark`, `astro-expressive-code`, `rehype-pretty-code`, `rehype-external-links`, `remark-emoji`, `rehype-katex`, `remark-math`). All of these either add support for the [unified](https://github.com/unifiedjs/unified) plugin ecosystem or are plugins themselves. I will talk more about our new Markdown pipeline, [Sätteri](https://satteri.bruits.org/), which removes `unified` and instead has a first-class <abbr title="Markdown Abstract Syntax Tree">MDAST</abbr> and <abbr title="HTML Abstract Syntax Tree">HAST</abbr> plugin API.
 
 Two packages moved rather than left. `typescript` and `@astrojs/check` are now `devDependencies` instead of runtime `dependencies`, which is where they always belonged, and the build script still runs `astro check && astro build{:sh}`. I did try shipping v2 without them, because dropping both is the single biggest win available on every dependency number in this post: 82 fewer installed packages and about 71mb less `node_modules`. `typescript` isn't even compiling anything, it's installed so `@astrojs/check` can borrow its compiler.
@@ -170,7 +171,9 @@ The main pusher for this switch for me was my friend Lyra ([@rebane2001](https:/
   <dictionary-entry>
     <h1>er·u·dite</h1>
     <etymology-span>
-      <ipa-span>/ˈer(y)əˌdīt/</ipa-span> adj. [L. <i>ēruditus</i>, instructed, pp. of <i>ērudīre</i> to instruct, polish, lit. to free from roughness, f. ē- out + <i>rudis</i> rough, untrained]
+      <ipa-span>/ˈer(y)əˌdīt/</ipa-span> adj. [L. <i>ēruditus</i>, instructed,
+      pp. of <i>ērudīre</i> to instruct, polish, lit. to free from roughness, f.
+      ē- out + <i>rudis</i> rough, untrained]
     </etymology-span>
     <ol>
       <li>
@@ -178,24 +181,24 @@ The main pusher for this switch for me was my friend Lyra ([@rebane2001](https:/
         learned (<i>an erudite scholar</i>).
       </li>
       <li>
-        (of writing, speech, or argument) reflecting such knowledge; scholarly
-        (<i>an erudite footnote</i>).
+        (of writing, speech, or argument) reflecting such knowledge; scholarly (
+        <i>an erudite footnote</i>).
       </li>
     </ol>
     <hr />
     <prose-content>
+      <p>astro-erudite is an opinionated, unstyled static blogging template.</p>
       <p>
-        astro-erudite is an opinionated, unstyled static blogging template.
-      </p>
-      <p>
-        To use this template, check out the <a
+        To use this template, check out the{" "}
+        <a
           href="https://github.com/jktrn/astro-erudite"
           target="_blank"
-          rel="noopener noreferrer">GitHub</a
-        > repository. To learn more about why this template exists, read this
-        blog post: <a href="/blog/introducing-v2"
-          >Introducing astro-erudite v2</a
-        >.
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>{" "}
+        repository. To learn more about why this template exists, read this blog
+        post: <a href="/blog/introducing-v2">Introducing astro-erudite v2</a>.
       </p>
     </prose-content>
   </dictionary-entry>
@@ -268,6 +271,7 @@ Instead of Tailwind's baked-in design system, tokens, and breakpoints, astro-eru
 The goal of Utopia is to provide a principled and elegant way to write breakpoint-less typography and spacing rules <dim-span>(as opposed to the `xs`, `sm`, `md`, `lg`, `xl`, `2xl` breakpoint names that Tailwind uses)</dim-span>. If you play around with the demo on their homepage <dim-span>(or simply just fiddle with the viewport width of this blog post, if you're on a desktop)</dim-span>, you can see how my margins, paddings, and font sizes are automatically adjusted based on the current viewport width!
 
 To put it reductively, you specify three things at two different "poles": the minimum viewport and maximum viewport <dim-span>(i.e., "between what two widths should I allow the system to change?")</dim-span>:
+
 1. Where do I want to place this pole?
 2. At this pole, what should the font size be?
 3. At this pole, what multiplier (type scale) should I use between each heading?
@@ -277,18 +281,20 @@ Utopia then calculates a `clamp(){:css}` that properly interpolates between thes
 ![Utopia type scale visual](https://utopia.fyi/images/fluid-type-scale-visualisation.png)
 
 astro-erudite personally uses the following:
+
 - The minimum viewport is 328px,[^1] where the font size should be 16px and the type scale should be 1.125 (major second).
 - The maximum viewport is 1215px, where the font size should be 18px and the type scale should be 1.2 (minor third).[^2]
 
 | Scale step | @min <dim-span>(328px)</dim-span> | @max <dim-span>(1215px)</dim-span> |
-| -: | -: | -: |
-| 3 | 22.78 | 31.10 |
-| 2 | 20.25 | 25.92 |
-| 1 | 18.00 | 21.60 |
-| 0 | 16.00 | 18.00 |
-| -1 | 14.22 | 15.00 |
+| ---------: | --------------------------------: | ---------------------------------: |
+|          3 |                             22.78 |                              31.10 |
+|          2 |                             20.25 |                              25.92 |
+|          1 |                             18.00 |                              21.60 |
+|          0 |                             16.00 |                              18.00 |
+|         -1 |                             14.22 |                              15.00 |
 
-[^1]: 328px and 1215px might seem like a somewhat arbitrary choice for pole positions. However, these were originally 320px <dim-span>(the de-facto absolute minimum width for responsiveness)</dim-span> and 1024px <dim-span>(when the v2 sidebar converts into a header)</dim-span> and were then adjusted by the [Fluid grid calculator](https://utopia.fyi/grid/calculator?c=328,16,1.125,1215,18,1.2,3,1,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l|s-m&g=s,m,2xl,12) for the following reasons:
+[^1]:
+    328px and 1215px might seem like a somewhat arbitrary choice for pole positions. However, these were originally 320px <dim-span>(the de-facto absolute minimum width for responsiveness)</dim-span> and 1024px <dim-span>(when the v2 sidebar converts into a header)</dim-span> and were then adjusted by the [Fluid grid calculator](https://utopia.fyi/grid/calculator?c=328,16,1.125,1215,18,1.2,3,1,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l|s-m&g=s,m,2xl,12) for the following reasons:
 
     - For minimum width, we ended up "rounding up" to create a perfect grid:
       > When you design a grid based on a fixed viewport, the sums rarely add up to nice neat whole numbers. Design tools usually compensate by rounding alternating columns up and down, leaving them with whole pixel values but inconsistent widths. If you prefer to design on a perfect grid, you can instead choose to round the container width up or down using the options above.
@@ -315,7 +321,7 @@ You can find the calculator preset for this particular setup [here](https://utop
   --leading-offset: 0.65rem;
 
   --prose-foreground: color-mix(in oklab, var(--foreground) 80%, transparent);
-  --prose-marker:     color-mix(in oklab, var(--foreground) 30%, transparent);
+  --prose-marker: color-mix(in oklab, var(--foreground) 30%, transparent);
 
   --measure: 40rem;
 }
@@ -338,6 +344,7 @@ In general, though, you should use `--step-0` as your baseline since it is the s
 In addition to handling type scaling, the aforementioned poles are also used for spacing! Utopia calls these "t-shirt sizes," which is quite cute actually.
 
 There are three types of scaling variables that Utopia outputs for you:
+
 - **Single-space.** These are the self-explanatory base-level space variables.
 - **Space-value pairs (single-step).** If you wish for any particular space to have a more emphasized scaling effect when interpolated, you can use a space-value pair! For example, `--space-m-l` will interpolate between M &rarr; L from the minimum to maximum poles.
 - **Space-value pairs (arbitrary).** You can arbitrarily assign any single-space variable at any pole and have it scale! I personally don't use this feature, but you can output it.
@@ -377,11 +384,11 @@ These can be used throughout your site's margin and padding values to create thi
 
 [^3]: 12 is a mathematically flexible number that allows you to divide a page into halves, thirds, quarters, and sixths. I believe it was originally used in print and magazine typography, and was then popularized by [Bootstrap](https://getbootstrap.com/) (correct me if I'm wrong).
 
-| Width | @min  | @max |
-| - | -: | -: |
+| Width     |  @min |   @max |
+| --------- | ----: | -----: |
 | Container | 328px | 1215px |
-| Gutter | 16px | 27px |
-| Column | 10px | 72px |
+| Gutter    |  16px |   27px |
+| Column    |  10px |   72px |
 
 We can then establish our grid layout and span sections across it:
 
@@ -394,17 +401,23 @@ We can then establish our grid layout and span sections across it:
     <page-grid>
       <page-header>
         <page-nav>
-          <Sidebar crumbs={crumbs}><slot name="actions" slot="actions" /></Sidebar>
+          <Sidebar crumbs={crumbs}>
+            <slot name="actions" slot="actions" />
+          </Sidebar>
         </page-nav>
-        {
-          Astro.slots.has("toc") && (
-            <page-toc><slot name="toc" /></page-toc>
-          )
-        }
+        {Astro.slots.has("toc") && (
+          <page-toc>
+            <slot name="toc" />
+          </page-toc>
+        )}
       </page-header>
       <page-content>
-        <main><slot /></main>
-        <page-footer><Footer /></page-footer>
+        <main>
+          <slot />
+        </main>
+        <page-footer>
+          <Footer />
+        </page-footer>
       </page-content>
     </page-grid>
   </body>
@@ -424,10 +437,21 @@ We can then establish our grid layout and span sections across it:
     padding-block-start: var(--page-offset-top);
   }
 
-  page-header { display: contents; }
-  page-nav { grid-column: 1 / 3; grid-row: 1; }
-  page-content { grid-column: 3 / 10; grid-row: 1; }
-  page-toc { grid-column: 10 / 13; grid-row: 1; }
+  page-header {
+    display: contents;
+  }
+  page-nav {
+    grid-column: 1 / 3;
+    grid-row: 1;
+  }
+  page-content {
+    grid-column: 3 / 10;
+    grid-row: 1;
+  }
+  page-toc {
+    grid-column: 10 / 13;
+    grid-row: 1;
+  }
   /* ... */
 </style>
 ```
@@ -440,31 +464,31 @@ And that is a complete rundown of astro-erudite's new design system!
 
 ```css title="src/styles/color.css"
 :root {
-  --gray-1:  light-dark(#fcfcfc, #111111);
-  --gray-2:  light-dark(#f9f9f9, #191919);
-  --gray-3:  light-dark(#f0f0f0, #222222);
-  --gray-4:  light-dark(#e8e8e8, #2a2a2a);
-  --gray-5:  light-dark(#e0e0e0, #313131);
-  --gray-6:  light-dark(#d9d9d9, #3a3a3a);
-  --gray-7:  light-dark(#cecece, #484848);
-  --gray-8:  light-dark(#bbbbbb, #606060);
-  --gray-9:  light-dark(#8d8d8d, #6e6e6e);
+  --gray-1: light-dark(#fcfcfc, #111111);
+  --gray-2: light-dark(#f9f9f9, #191919);
+  --gray-3: light-dark(#f0f0f0, #222222);
+  --gray-4: light-dark(#e8e8e8, #2a2a2a);
+  --gray-5: light-dark(#e0e0e0, #313131);
+  --gray-6: light-dark(#d9d9d9, #3a3a3a);
+  --gray-7: light-dark(#cecece, #484848);
+  --gray-8: light-dark(#bbbbbb, #606060);
+  --gray-9: light-dark(#8d8d8d, #6e6e6e);
   --gray-10: light-dark(#838383, #7b7b7b);
   --gray-11: light-dark(#646464, #b4b4b4);
   --gray-12: light-dark(#202020, #eeeeee);
 
-  --red-9:  light-dark(#e5484d, #e5484d);
+  --red-9: light-dark(#e5484d, #e5484d);
   --red-11: light-dark(#ce2c31, #ff9592);
 
-  --background:         var(--gray-1);
-  --foreground:         var(--gray-12);
-  --primary:            var(--gray-12);
+  --background: var(--gray-1);
+  --foreground: var(--gray-12);
+  --primary: var(--gray-12);
   --primary-foreground: var(--gray-1);
-  --muted:              var(--gray-3);
-  --muted-foreground:   var(--gray-11);
-  --destructive:        var(--red-11);
-  --border:             var(--gray-6);
-  --ring:               var(--gray-8);
+  --muted: var(--gray-3);
+  --muted-foreground: var(--gray-11);
+  --destructive: var(--red-11);
+  --border: var(--gray-6);
+  --ring: var(--gray-8);
 
   color-scheme: light dark;
 }
@@ -484,6 +508,7 @@ This is a bunch of miscellaneous Tailwind stuff we have actually kept in some ca
 As you might have noticed, astro-erudite is now using a new font! We're now on [IBM Plex Sans](https://fonts.google.com/specimen/IBM+Plex+Sans) and [IBM Plex Mono](https://fonts.google.com/specimen/IBM+Plex+Mono). Historically, IBM Plex Sans was commissioned by IBM to replace [Helvetica Neue](https://en.wikipedia.org/wiki/Helvetica) <dim-span>(arguably one of the greatest fonts of all time)</dim-span>. These two replace [Geist Sans](https://fonts.google.com/specimen/Geist)/[Mono](https://fonts.google.com/specimen/Geist+Mono) in part because Geist <dim-span>(and likewise, [Inter](https://fonts.google.com/specimen/Inter))</dim-span> have been overused to the moon and back.
 
 Some other readability changes:
+
 - I personally despise heavy font weights. I also despise thin weights. Since astro-erudite is, of course, opinionated, I've decided to exclusively ship only the 400 <dim-span>(normal)</dim-span> and 500 <dim-span>(medium)</dim-span> weights of IBM Plex Mono. For IBM Plex Sans, a variable font, I've made it so that there are no instances of weights other than 400 and 450 <dim-span>(not 500!)</dim-span> throughout v2. I almost always prefer establishing hierarchy through opacity rather than weight: headers and links should get 100%, prose should get 80%, and muted text should get 60%.
 - Due to Utopia, desktop devices now get big 18px fonts, and mobile devices get 16px fonts. v1 had 16px on desktop, and it just stayed like that.
 - In regards to line height, all lines now use the following computation:
@@ -494,52 +519,59 @@ Some other readability changes:
   ```
 
   Instead of some unitless multiplier number, we now additively add a constant offset (0.65rem) to each element's own font size (1em). This keeps a roughly constant gap between lines regardless of text size, so headings stay tight and body text stays comfortable without needing a separate line-height rule for every heading and paragraph.
+
 - We now use `max-inline-size: var(--measure){:css}` where `--measure: 40rem{:css}`. 40rem makes the overall content width narrower and nicer to read.
 - For the specific task of importing fonts via `@font-face{:css}`, you may notice that there's a couple of weird entries:
 
   ```css title="src/styles/fonts.css" startLineNumber={17} collapse={10-18,29-39} {7,24-27}
   @font-face {
     font-family: "IBM Plex Sans";
-    src: url("../assets/fonts/IBMPlexSans-LatinExt-VariableFont_wght.woff2") format("woff2");
+    src: url("../assets/fonts/IBMPlexSans-LatinExt-VariableFont_wght.woff2")
+      format("woff2");
     font-weight: 100 700;
     font-style: normal;
     font-display: swap;
-    unicode-range: U+0100-02FF, U+0300-036F, U+1D00-1DBF, U+1E00-1EFF, U+20A0-20C0, U+2C60-2C7F, U+A720-A7FF;
+    unicode-range:
+      U+0100-02FF, U+0300-036F, U+1D00-1DBF, U+1E00-1EFF, U+20A0-20C0,
+      U+2C60-2C7F, U+A720-A7FF;
   }
-  
+
   @font-face {
     font-family: "IBM Plex Sans";
-    src: url("../assets/fonts/IBMPlexSans-LatinExt-Italic-VariableFont_wght.woff2") format("woff2");
+    src: url("../assets/fonts/IBMPlexSans-LatinExt-Italic-VariableFont_wght.woff2")
+      format("woff2");
     font-weight: 100 700;
     font-style: italic;
     font-display: swap;
-    unicode-range: U+0100-02FF, U+0300-036F, U+1D00-1DBF, U+1E00-1EFF, U+20A0-20C0, U+2C60-2C7F, U+A720-A7FF;
+    unicode-range:
+      U+0100-02FF, U+0300-036F, U+1D00-1DBF, U+1E00-1EFF, U+20A0-20C0,
+      U+2C60-2C7F, U+A720-A7FF;
   }
-  
+
   @font-face {
     font-family: "IBM Plex Sans Fallback";
     src: local("Arial");
     font-weight: 100 700;
     font-style: normal;
-    size-adjust:       101.1663%;
-    ascent-override:   101.3184%;
-    descent-override:  27.183%;
+    size-adjust: 101.1663%;
+    ascent-override: 101.3184%;
+    descent-override: 27.183%;
     line-gap-override: 0%;
   }
-  
+
   @font-face {
     font-family: "IBM Plex Sans Fallback";
     src: local("Arial");
     font-weight: 100 700;
     font-style: italic;
-    size-adjust:       101.1663%;
-    ascent-override:   101.3184%;
-    descent-override:  27.183%;
+    size-adjust: 101.1663%;
+    ascent-override: 101.3184%;
+    descent-override: 27.183%;
     line-gap-override: 0%;
   }
   ```
-    - The former entries involve a `LatinExt` (Latin Extended) font. The goal is to support the rendering of Latin-based characters in other languages, e.g. Spanish, French, Vietnamese, German, Polish, etc. It also allows me to properly render the [IPA](https://en.wikipedia.org/wiki/International_Phonetic_Alphabet) pronunciation of erudite <dim-span>(/ˈer(y)əˌdīt/)</dim-span> so that I can put a cool dictionary definition on the homepage of this template.
-    - The latter entries involve a fallback font. I manually specify `local("Arial"){:css}` as the fallback, but then I also specify these weird adjustments to ascenders, descenders, and sizing. These were actually automatically generated by Astro's [Fonts API](https://docs.astro.build/en/guides/fonts/) <dim-span>(which I intentionally didn't use because its syntax was clunky for minimal benefit)</dim-span>.
+  - The former entries involve a `LatinExt` (Latin Extended) font. The goal is to support the rendering of Latin-based characters in other languages, e.g. Spanish, French, Vietnamese, German, Polish, etc. It also allows me to properly render the [IPA](https://en.wikipedia.org/wiki/International_Phonetic_Alphabet) pronunciation of erudite <dim-span>(/ˈer(y)əˌdīt/)</dim-span> so that I can put a cool dictionary definition on the homepage of this template.
+  - The latter entries involve a fallback font. I manually specify `local("Arial"){:css}` as the fallback, but then I also specify these weird adjustments to ascenders, descenders, and sizing. These were actually automatically generated by Astro's [Fonts API](https://docs.astro.build/en/guides/fonts/) <dim-span>(which I intentionally didn't use because its syntax was clunky for minimal benefit)</dim-span>.
 
 The typography files themselves have also dramatically changed. Instead of throwing everything into `global.css` and `typography.css` <dim-span>(this file was atrocious in v1, and used `!important{:css}` 9 (!!!) times)</dim-span>, we now divide CSS files into their responsibilities: color, layout, fonts, shape, etc. For specifically typography, we additionally divide it into the following: headings, lists, tables, block <dim-span>(block-level elements, e.g. tables, figures, codeblocks)</dim-span>, and inline <dim-span>(inline-level elements, e.g. links, `<kbd>{:html}`, inline code)</dim-span>. Although this has resulted in many new files, each file is readable and low cortisol to look at, and is focused in intents and purposes.
 
@@ -581,16 +613,16 @@ There's actually no MDX involved here! You're reading a regular `.md` file. That
       "click-counter",
       class extends HTMLElement {
         connectedCallback() {
-          let count = 0
-          const button = document.createElement("button")
-          button.textContent = "Clicked 0 times"
+          let count = 0;
+          const button = document.createElement("button");
+          button.textContent = "Clicked 0 times";
           button.addEventListener("click", () => {
-            button.textContent = `Clicked ${++count} times`
-          })
-          this.append(button)
+            button.textContent = `Clicked ${++count} times`;
+          });
+          this.append(button);
         }
       },
-    )
+    );
   }
 </script>
 ```
@@ -600,6 +632,7 @@ The `customElements.get(){:js}` check is not optional! Since astro-erudite has [
 :::
 
 A plethora of other benefits also comes with unchaining ourselves from the React ecosystem like this:
+
 - Removing `@astrojs/mdx` also drops our dependency tree by 51 packages <dim-span>(more packages than everything v2 stacks on top of Astro!)</dim-span>.
 - JSX syntax is a lot less forgiving for both humans and compilers. Non-technical writers find it harder to write valid JSX, and embedded JSX can also fail entire builds. In general, rendering it is heavier.
 - Your blogs are now dramatically more portable and universal to different platforms!
@@ -611,11 +644,11 @@ I also want to reiterate that you are completely free to install it yourself if 
 I don't know why I ever thought this was in any way ergonomic, but in v1 any time you wanted to add a callout you would have to import it at the top of your file and call it like this:
 
 ```tsx showLineNumbers=false
-import Callout from '@/components/callout.astro'
+import Callout from "@/components/callout.astro";
 
 <Callout title="Testing" variant="note">
   Hello, world!
-</Callout>
+</Callout>;
 ```
 
 v2 ships with the [Sätteri](https://satteri.bruits.org/) Markdown processor, which supports [directives](https://satteri.bruits.org/docs/features/#directives) with the same specification as [remark-directive](https://github.com/remarkjs/remark-directive). We now can add callouts to our Markdown content like this, without any imports:
@@ -625,6 +658,7 @@ v2 ships with the [Sätteri](https://satteri.bruits.org/) Markdown processor, wh
 Hello, world!
 :::
 ```
+
 This renders as:
 
 :::note[Testing]
@@ -738,21 +772,21 @@ From here, I will talk about each of the six plugins that I've created and shipp
 We sort this section from trivial to nontrivial. The most basic of these is my `external-links` plugin, and its sole purpose is to add `target="_blank"{:html}` and `rel="nofollow noreferrer noopener"{:html}` to links. We do this via the HAST:
 
 ```ts title="src/lib/external-links.ts"
-import { defineHastPlugin } from "satteri"
+import { defineHastPlugin } from "satteri";
 
 export const externalLinks = defineHastPlugin({
   name: "external-links",
   element: {
     filter: ["a"],
     visit(node, ctx) {
-      const href = node.properties.href
+      const href = node.properties.href;
       if (typeof href === "string" && /^https?:\/\//.test(href)) {
-        ctx.setProperty(node, "target", "_blank")
-        ctx.setProperty(node, "rel", "nofollow noreferrer noopener")
+        ctx.setProperty(node, "target", "_blank");
+        ctx.setProperty(node, "rel", "nofollow noreferrer noopener");
       }
     },
   },
-})
+});
 ```
 
 #### Namespacing headings
@@ -760,28 +794,28 @@ export const externalLinks = defineHastPlugin({
 This plugin is responsible for namespacing headings within posts that have subposts (which I talk about in [Regarding subposts](#regarding-subposts), since this system has also been completely overhauled). This is so that in the case where multiple subposts share the same heading, the headings are differentiated by prepending the post's file name to the ID. We do this via the HAST:
 
 ```ts title="src/lib/heading-namespace.ts"
-import GithubSlugger from "github-slugger"
-import { defineHastPlugin } from "satteri"
+import GithubSlugger from "github-slugger";
+import { defineHastPlugin } from "satteri";
 
-const SUBPOST = /\/blog\/[^/]+\/(?!index\.mdx?$)([^/]+)\.mdx?$/
+const SUBPOST = /\/blog\/[^/]+\/(?!index\.mdx?$)([^/]+)\.mdx?$/;
 
 export function headingNamespace() {
-  const slugger = new GithubSlugger()
+  const slugger = new GithubSlugger();
   return defineHastPlugin({
     name: "heading-namespace",
     element: {
       filter: ["h1", "h2", "h3", "h4", "h5", "h6"],
       visit(node, ctx) {
-        const match = SUBPOST.exec(ctx.filename)
-        if (!match) return
+        const match = SUBPOST.exec(ctx.filename);
+        if (!match) return;
         ctx.setProperty(
           node,
           "id",
           `${match[1]}-${slugger.slug(ctx.textContent(node))}`,
-        )
+        );
       },
     },
-  })
+  });
 }
 ```
 
@@ -797,24 +831,24 @@ v1 rendered LaTeX through `remark-math` and `rehype-katex`. [KaTeX](https://kate
 v2 renders LaTeX through [Temml](https://temml.org/), which outputs [MathML](https://developer.mozilla.org/en-US/docs/Web/MathML). Since MathML is actually browser-native <dim-span>(it became Baseline in 2023)</dim-span>, we no longer need to inject a CSS file and instead just need to bring along a math font! [STIX Two Math](https://fonts.google.com/specimen/STIX+Two+Math) is a great choice <dim-span>(and the default for macOS)</dim-span>. Here is the plugin, done with the MDAST:
 
 ```ts title="src/lib/math.ts"
-import { defineMdastPlugin } from "satteri"
-import temml from "temml"
+import { defineMdastPlugin } from "satteri";
+import temml from "temml";
 
-const err = (e: unknown) => (e instanceof Error ? e.message : String(e))
+const err = (e: unknown) => (e instanceof Error ? e.message : String(e));
 
 export function temmlMath() {
   return defineMdastPlugin({
     name: "temml-math",
     inlineMath(node, ctx) {
       try {
-        const value = temml.renderToString(node.value, { throwOnError: false })
-        return { type: "html", value }
+        const value = temml.renderToString(node.value, { throwOnError: false });
+        return { type: "html", value };
       } catch (error) {
         ctx.report({
           message: `temml-math: failed on \`${node.value}\`: ${err(error)}`,
           node,
           severity: "warning",
-        })
+        });
       }
     },
     math(node, ctx) {
@@ -822,17 +856,17 @@ export function temmlMath() {
         const value = temml.renderToString(node.value, {
           displayMode: true,
           throwOnError: false,
-        })
-        return { type: "html", value: `<math-display>${value}</math-display>` }
+        });
+        return { type: "html", value: `<math-display>${value}</math-display>` };
       } catch (error) {
         ctx.report({
           message: `temml-math: failed on \`${node.value}\`: ${err(error)}`,
           node,
           severity: "warning",
-        })
+        });
       }
     },
-  })
+  });
 }
 ```
 
@@ -847,24 +881,24 @@ $$
 This is the plugin I promised back in ["But what about callouts?"](#but-what-about-callouts). With the flag on, Sätteri parses `:::` blocks into `containerDirective` <dim-span>(as opposed to inline `:` and leaf `::`)</dim-span> MDAST nodes and then leaves them for someone to handle:
 
 ```ts title="src/lib/callout.ts" collapse={1-37}
-import { readFileSync } from "node:fs"
-import { dirname, join } from "node:path"
-import { fileURLToPath } from "node:url"
-import type { ElementContent } from "hast"
-import { toHtml } from "hast-util-to-html"
-import { h } from "hastscript"
-import { defineMdastPlugin } from "satteri"
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import type { ElementContent } from "hast";
+import { toHtml } from "hast-util-to-html";
+import { h } from "hastscript";
+import { defineMdastPlugin } from "satteri";
 
 const ICONS_DIR = join(
   dirname(fileURLToPath(import.meta.url)),
   "../assets/icons/callouts",
-)
+);
 
 const loadIcon = (name: string) =>
   readFileSync(join(ICONS_DIR, `${name}.svg`), "utf8")
     .replace("<svg", '<svg aria-hidden="true"')
     .replace(/\s+/g, " ")
-    .trim()
+    .trim();
 
 const VARIANTS: Record<string, string> = {
   note: "info-circle",
@@ -872,36 +906,36 @@ const VARIANTS: Record<string, string> = {
   warning: "danger-triangle",
   caution: "shield-warning",
   important: "bell",
-}
+};
 
-const icons: Record<string, string> = {}
+const icons: Record<string, string> = {};
 for (const name of [...new Set(Object.values(VARIANTS)), "alt-arrow-down"]) {
-  icons[name] = loadIcon(name)
+  icons[name] = loadIcon(name);
 }
 
-const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
+const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 const raw = (value: string): ElementContent =>
-  ({ type: "raw", value }) as unknown as ElementContent
+  ({ type: "raw", value }) as unknown as ElementContent;
 
 export function calloutDirective() {
   return defineMdastPlugin({
     name: "callout-directive",
     containerDirective(node, ctx) {
-      const iconName = VARIANTS[node.name]
-      if (!iconName) return
+      const iconName = VARIANTS[node.name];
+      if (!iconName) return;
 
-      const first = node.children[0]
+      const first = node.children[0];
       const isLabel =
         first?.type === "paragraph" &&
-        (first.data as { directiveLabel?: boolean })?.directiveLabel === true
-      const label = isLabel ? ctx.textContent(first) : null
-      if (isLabel) ctx.removeNode(first)
+        (first.data as { directiveLabel?: boolean })?.directiveLabel === true;
+      const label = isLabel ? ctx.textContent(first) : null;
+      if (isLabel) ctx.removeNode(first);
 
       const title: ElementContent[] = [
         { type: "text", value: capitalize(node.name) },
-      ]
-      if (label) title.push(h("span", ` (${label})`))
+      ];
+      if (label) title.push(h("span", ` (${label})`));
 
       const summary = toHtml(
         h("summary", [
@@ -910,35 +944,36 @@ export function calloutDirective() {
           raw(icons["alt-arrow-down"]),
         ]),
         { allowDangerousHtml: true },
-      )
+      );
 
-      const closed = !!node.attributes && "closed" in node.attributes
+      const closed = !!node.attributes && "closed" in node.attributes;
 
-      ctx.prependChild(node, { type: "html", value: summary })
+      ctx.prependChild(node, { type: "html", value: summary });
       ctx.setProperty(node, "data", {
         hName: "details",
         hProperties: {
           dataCallout: node.name,
           open: !closed,
         },
-      })
+      });
     },
-  })
+  });
 }
 ```
 
 The five variants defined in the plugin are derived from [GitHub alerts](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts) <dim-span>(note, tip, warning, caution, important)</dim-span>. Because they're real `<details>{:html}` elements, every callout you've seen in this post is natively collapsible with exactly zero JavaScript, and appending `{closed}` to the directive makes one start out collapsed.
 
 There are some clever things behind-the-scenes that make this all work very elegantly:
+
 - The icons are Solar SVGs read off the disk at build time and inlined straight into the HTML, so we need no client-side fetching of icons and no icon library.
 - Each `data-callout` variant only needs a single color defined for `--accent`, and then legible colors are automatically derived for both light and dark mode with some small modifications to lightness and chroma:
 
 ```css title="src/styles/callout.css" collapse={9-63} {6-7}
 prose-content {
   [data-callout] {
-    --accent:         var(--muted-foreground);
+    --accent: var(--muted-foreground);
     --callout-border: var(--accent);
-    --callout-text:   light-dark(
+    --callout-text: light-dark(
       oklch(from var(--accent) 0.48 calc(c * 1.05) h),
       oklch(from var(--accent) 0.83 calc(c * 0.5) h)
     );
@@ -997,11 +1032,21 @@ prose-content {
     }
   }
 
-  [data-callout="note"]      { --accent: #0090ff; }
-  [data-callout="tip"]       { --accent: #30a46c; }
-  [data-callout="warning"]   { --accent: #ffc53d; }
-  [data-callout="caution"]   { --accent: #e5484d; }
-  [data-callout="important"] { --accent: #8e4ec6; }
+  [data-callout="note"] {
+    --accent: #0090ff;
+  }
+  [data-callout="tip"] {
+    --accent: #30a46c;
+  }
+  [data-callout="warning"] {
+    --accent: #ffc53d;
+  }
+  [data-callout="caution"] {
+    --accent: #e5484d;
+  }
+  [data-callout="important"] {
+    --accent: #8e4ec6;
+  }
 }
 ```
 
@@ -1010,26 +1055,26 @@ prose-content {
 Code blocks are still rendered by [Expressive Code](https://expressive-code.com/), because nothing else comes close <dim-span>(text markers, collapsible sections, ANSI color code rendering, line numbers, and the editor and terminal frames)</dim-span>. Crazily, the first companion plugin the Sätteri team shipped was [`satteri-expressive-code`](https://www.npmjs.com/package/satteri-expressive-code) <dim-span>(it exists in the same monorepo as Sätteri itself)</dim-span>, so my "plugin" here is nine lines of wiring:
 
 ```ts title="src/lib/expressive-code/index.ts"
-import expressiveCode from "satteri-expressive-code"
-import { ecRenderer } from "./config"
-import { inlineExpressiveCode } from "./inline"
+import expressiveCode from "satteri-expressive-code";
+import { ecRenderer } from "./config";
+import { inlineExpressiveCode } from "./inline";
 
 export const blockExpressiveCode = expressiveCode({
   customCreateRenderer: () => ecRenderer,
-})
+});
 
-export { inlineExpressiveCode }
+export { inlineExpressiveCode };
 ```
 
 The configuration <dim-span>(the one with the giant `styleOverrides` block I told you not to worry about)</dim-span> now, thankfully, gets shooed away in its own file instead of being crammed into `astro.config.ts`, and every override points at a custom property from the design system, so code blocks scale fluidly with Utopia and follow the theme toggle like everything else on the page:
 
 ```ts title="src/lib/expressive-code/config.ts" collapse={14-58}
-import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections"
-import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers"
+import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
+import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import {
   createRenderer,
   type SatteriExpressiveCodeOptions,
-} from "satteri-expressive-code"
+} from "satteri-expressive-code";
 
 export const ecOptions: SatteriExpressiveCodeOptions = {
   themes: ["github-light", "github-dark"],
@@ -1082,9 +1127,9 @@ export const ecOptions: SatteriExpressiveCodeOptions = {
       closedFontFamily: "var(--font-sans)",
     },
   },
-}
+};
 
-export const ecRenderer = createRenderer(ecOptions)
+export const ecRenderer = createRenderer(ecOptions);
 ```
 
 The line that actually matters here is `customCreateRenderer{:ts}`. If we had left it alone, the plugin would create its own private Expressive Code renderer. Instead, we create the renderer ourselves and hand it over, because we'll need to borrow it in the next section.
@@ -1102,33 +1147,33 @@ The `mdx(){:ts}` plugin is gone.
 The major difference is that it now feeds through the exact same renderer as the code blocks. When the plugin sees an annotated inline code node, it constructs a one-line `ExpressiveCodeBlock{:ts}`, renders it with the shared renderer from `config.ts`, plucks the highlighted tokens out of the result, and throws the rest of the frame away:
 
 ```ts title="src/lib/expressive-code/inline.ts" collapse={1-13,41-60}
-import type { ElementContent } from "hast"
-import { toHtml } from "hast-util-to-html"
-import { select } from "hast-util-select"
-import { h } from "hastscript"
-import type { Html } from "mdast"
-import { defineMdastPlugin } from "satteri"
+import type { ElementContent } from "hast";
+import { toHtml } from "hast-util-to-html";
+import { select } from "hast-util-select";
+import { h } from "hastscript";
+import type { Html } from "mdast";
+import { defineMdastPlugin } from "satteri";
 import {
   type ExpressiveCode,
   ExpressiveCodeBlock,
   type ExpressiveCodeTheme,
-} from "satteri-expressive-code"
-import { ecRenderer } from "./config"
+} from "satteri-expressive-code";
+import { ecRenderer } from "./config";
 
-const ANNOTATION = /^(.+?)\{:([^}]+)\}$/
+const ANNOTATION = /^(.+?)\{:([^}]+)\}$/;
 
 type Annotation =
   | { kind: "lang"; code: string; lang: string }
-  | { kind: "scope"; code: string; scope: string }
+  | { kind: "scope"; code: string; scope: string };
 
 function parseAnnotation(value: string): Annotation | null {
-  const match = ANNOTATION.exec(value)
-  if (!match) return null
-  const [, code, tag] = match
-  if (!code || tag === ".") return null
+  const match = ANNOTATION.exec(value);
+  if (!match) return null;
+  const [, code, tag] = match;
+  if (!code || tag === ".") return null;
   return tag.startsWith(".")
     ? { kind: "scope", code, scope: tag.slice(1) }
-    : { kind: "lang", code, lang: tag }
+    : { kind: "lang", code, lang: tag };
 }
 
 async function highlightLanguage(
@@ -1136,10 +1181,10 @@ async function highlightLanguage(
   code: string,
   lang: string,
 ): Promise<ElementContent[]> {
-  const block = new ExpressiveCodeBlock({ code, language: lang })
-  const { renderedGroupAst } = await ec.render(block)
-  const tokens = select(".ec-line .code", renderedGroupAst)?.children
-  return tokens ?? [{ type: "text", value: code }]
+  const block = new ExpressiveCodeBlock({ code, language: lang });
+  const { renderedGroupAst } = await ec.render(block);
+  const tokens = select(".ec-line .code", renderedGroupAst)?.children;
+  return tokens ?? [{ type: "text", value: code }];
 }
 
 function highlightScope(
@@ -1147,10 +1192,10 @@ function highlightScope(
   code: string,
   scope: string,
 ): ElementContent[] {
-  const [light, dark] = ec.styleVariants
-  const c0 = resolveScopeColor(light.theme, scope)
-  const c1 = resolveScopeColor(dark.theme, scope)
-  return [h("span", { style: `--0:${c0};--1:${c1}` }, code)]
+  const [light, dark] = ec.styleVariants;
+  const c0 = resolveScopeColor(light.theme, scope);
+  const c1 = resolveScopeColor(dark.theme, scope);
+  return [h("span", { style: `--0:${c0};--1:${c1}` }, code)];
 }
 
 function resolveScopeColor(theme: ExpressiveCodeTheme, scope: string): string {
@@ -1159,38 +1204,38 @@ function resolveScopeColor(theme: ExpressiveCodeTheme, scope: string): string {
       (rule.scope ?? []).map((s) => ({ s, fg: rule.settings.foreground })),
     )
     .filter(({ s, fg }) => fg && (scope === s || scope.startsWith(`${s}.`)))
-    .sort((a, b) => b.s.length - a.s.length)[0]
-  return best?.fg ?? theme.fg
+    .sort((a, b) => b.s.length - a.s.length)[0];
+  return best?.fg ?? theme.fg;
 }
 
 export function inlineExpressiveCode() {
   return defineMdastPlugin({
     name: "inline-expressive-code",
     async inlineCode(node, ctx) {
-      const annotation = parseAnnotation(node.value)
-      if (!annotation) return
+      const annotation = parseAnnotation(node.value);
+      if (!annotation) return;
 
       try {
-        const { ec } = await ecRenderer
+        const { ec } = await ecRenderer;
         const tokens =
           annotation.kind === "lang"
             ? await highlightLanguage(ec, annotation.code, annotation.lang)
-            : highlightScope(ec, annotation.code, annotation.scope)
+            : highlightScope(ec, annotation.code, annotation.scope);
         const dataLanguage =
-          annotation.kind === "lang" ? annotation.lang : undefined
+          annotation.kind === "lang" ? annotation.lang : undefined;
 
-        const value = toHtml(h("code", { dataEc: "", dataLanguage }, tokens))
-        return { type: "html", value } satisfies Html
+        const value = toHtml(h("code", { dataEc: "", dataLanguage }, tokens));
+        return { type: "html", value } satisfies Html;
       } catch (error) {
-        const reason = error instanceof Error ? error.message : String(error)
+        const reason = error instanceof Error ? error.message : String(error);
         ctx.report({
           message: `inline-expressive-code: failed on \`${node.value}\`: ${reason}`,
           node,
           severity: "warning",
-        })
+        });
       }
     },
-  })
+  });
 }
 ```
 
@@ -1203,6 +1248,7 @@ And that is the entire v2 Markdown pipeline!
 Subposts were one of the most important features of v1. They allowed you to compartmentalize content into smaller and more digestible pieces, and allowed you to establish a chain of related content. Although I am speaking of it in past tense like I mysteriously decided to remove it in v2, it's not going anywhere! I just made it infinitely better to use.
 
 Within v1, a subpost was its own standalone page. You'd read the parent, then click into part one, then click into part two, and so on. Since every part was a separate URL with separate content, I had to build three different navigational components so that you never felt lost:
+
 1. A sticky sidebar listing the series on desktop (`SubpostsSidebar.astro`)
 2. A collapsible dropdown on mobile (`SubpostsHeader.astro`)
 3. A special three-column previous/parent/next footer
@@ -1217,30 +1263,31 @@ I've avoided changing the authoring experience <dim-span>(a folder with an `inde
 
 ```ts title="src/pages/blog/[...id].astro" startLineNumber={13}
 export async function getStaticPaths() {
-  const posts = await getPosts()
-  const series = await getSubposts()
+  const posts = await getPosts();
+  const series = await getSubposts();
   return posts.flatMap((parent, i) => {
-    const chain = [parent, ...(series.get(parent.id) ?? [])]
+    const chain = [parent, ...(series.get(parent.id) ?? [])];
     return chain.map((post) => ({
       params: { id: post.id },
       props: { post, chain, prev: posts[i + 1], next: posts[i - 1] },
-    }))
-  })
+    }));
+  });
 }
 ```
 
 From there, a small script updates your address bar. An `IntersectionObserver{:ts}` watches a thin band near the top of the viewport, and whenever a different article in the chain crosses it, the URL and tab title silently swap to match what you're reading. Of course, this is bidirectional:
 
 ```ts title="src/components/SeriesReader.astro" showLineNumbers=false
-const { url, title } = current.dataset
+const { url, title } = current.dataset;
 if (url && trimSlash(location.pathname) !== url) {
-  history.replaceState(history.state, "", url + hash)
-  if (title) document.title = title
-  syncCrumb(current)
+  history.replaceState(history.state, "", url + hash);
+  if (title) document.title = title;
+  syncCrumb(current);
 }
 ```
 
 Incidentally, several benefits come from switching to this design:
+
 - Each subpost URL is unique, so deep links work exactly as expected. You will be scrolled to that article in the series before first paint.
 - Since every URL in a series shares the same body, the scroll position Astro stores in `history.state{:ts}` is valid on all of them, so reloading or hitting the back button restores the exact spot where you were reading!
 - Subpost URLs now declare a `<link rel="canonical">{:html}` pointing at the parent, so search engines don't index the same document multiple times.
@@ -1267,6 +1314,7 @@ The rest of the changes are smaller interface decisions that don't individually 
 v2 is a really big rewrite. Design-wise, if you have a customized v1 fork, I would highly suggest not attempting to pull v2 into it. My suggestion here would actually be to send the diff between your v1 fork and v1 baseline to an agent and then have it replicate those changes on a fresh v2.
 
 Content-wise, ensure you (or your agent) are aware of the following caveats when porting a v1 post to v2:
+
 - **`.mdx` files are no longer collected.** The content loader's glob is `**/[^_]*.md` now <dim-span>(the `[^_]` also lets you hide a file from the loader entirely by prefixing it with an underscore)</dim-span>.
   - Ensure you convert all instances of `<Callout>{:tsx}` to [`:::` directives](#but-what-about-callouts), and interactive components to [custom elements with a `<script>{:html}` tag](#regarding-mdx).
   - If your content is too interactive and needs framework islands, install `@astrojs/mdx` back and re-add `.mdx` to your glob.

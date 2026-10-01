@@ -1,22 +1,24 @@
 ---
-import ChevronIcon from "@/assets/icons/callouts/alt-arrow-down.svg"
-import type { MarkdownHeading } from "astro"
+import ChevronIcon from "@/assets/icons/callouts/alt-arrow-down.svg";
+import type { MarkdownHeading } from "astro";
 
 type Section = {
-  id?: string
-  label: string
-  open?: boolean
-  headings: MarkdownHeading[]
-}
-type Props = { title: string; sections: Section[] }
+  id?: string;
+  label: string;
+  open?: boolean;
+  headings: MarkdownHeading[];
+};
+type Props = { title: string; sections: Section[] };
 
-const { title, sections } = Astro.props
+const { title, sections } = Astro.props;
 ---
 
 <nav aria-label="Table of contents">
-  <toc-title aria-hidden="true"><span>{title}</span></toc-title>
+  <toc-title aria-hidden="true">
+    <span>{title}</span>
+  </toc-title>
   <label data-bar>
-    <input type="checkbox" aria-label="Toggle table of contents">
+    <input type="checkbox" aria-label="Toggle table of contents" />
     <svg viewBox="0 0 16 16" aria-hidden="true">
       <circle cx="8" cy="8" r="6.5" />
       <circle cx="8" cy="8" r="6.5" transform="rotate(-90 8 8)" />
@@ -26,34 +28,34 @@ const { title, sections } = Astro.props
   </label>
   <ul data-bar>
     {sections.map(({ id, label, open, headings }) =>
-        id ? (
-          <li data-group>
-            {headings.length > 0 ? (
-              <details open={open || undefined}>
-                <summary>
-                  <a href={`#${id}`}>{label}</a>
-                  <ChevronIcon aria-hidden="true" />
-                </summary>
-                <ul>
-                  {headings.map(({ depth, slug, text }) => (
-                    <li data-depth={depth}>
-                      <a href={`#${slug}`}>{text}</a>
-                    </li>
-                  ))}
-                </ul>
-              </details>
-            ) : (
-              <a href={`#${id}`}>{label}</a>
-            )}
+      id ? (
+        <li data-group>
+          {headings.length > 0 ? (
+            <details open={open || undefined}>
+              <summary>
+                <a href={`#${id}`}>{label}</a>
+                <ChevronIcon aria-hidden="true" />
+              </summary>
+              <ul>
+                {headings.map(({ depth, slug, text }) => (
+                  <li data-depth={depth}>
+                    <a href={`#${slug}`}>{text}</a>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          ) : (
+            <a href={`#${id}`}>{label}</a>
+          )}
+        </li>
+      ) : (
+        headings.map(({ depth, slug, text }) => (
+          <li data-depth={depth}>
+            <a href={`#${slug}`}>{text}</a>
           </li>
-        ) : (
-          headings.map(({ depth, slug, text }) => (
-            <li data-depth={depth}>
-              <a href={`#${slug}`}>{text}</a>
-            </li>
-          ))
-        ),
-      )}
+        ))
+      ),
+    )}
   </ul>
 </nav>
 
@@ -64,9 +66,7 @@ const { title, sections } = Astro.props
     display: flex;
     flex-direction: column;
     max-height: calc(
-      100svh -
-      var(--page-offset-top) -
-      var(--page-offset-bottom)
+      100svh - var(--page-offset-top) - var(--page-offset-bottom)
     );
     font-size: var(--step--1);
 
@@ -129,8 +129,7 @@ const { title, sections } = Astro.props
             stroke: var(--muted-foreground);
             stroke-dasharray: var(--circumference);
             stroke-dashoffset: calc(
-              var(--circumference) *
-              (1 - var(--progress, 0))
+              var(--circumference) * (1 - var(--progress, 0))
             );
           }
         }
@@ -260,8 +259,7 @@ const { title, sections } = Astro.props
 
     li[data-depth] {
       padding-inline-start: calc(
-        (var(--shift, 0) + var(--indent, 0)) *
-        var(--space-xs)
+        (var(--shift, 0) + var(--indent, 0)) * var(--space-xs)
       );
     }
 
@@ -276,164 +274,163 @@ const { title, sections } = Astro.props
 </style>
 
 <script>
-  import { hashId } from "@/lib/utils"
+  import { hashId } from "@/lib/utils";
 
-  ;(() => {
-    const nav = document.querySelector<HTMLElement>("page-toc nav")
-    if (!nav) return
+  (() => {
+    const nav = document.querySelector<HTMLElement>("page-toc nav");
+    if (!nav) return;
 
-    const ring = nav.querySelector<SVGElement>("label svg")
-    const mobile = matchMedia("(width < 64rem)")
+    const ring = nav.querySelector<SVGElement>("label svg");
+    const mobile = matchMedia("(width < 64rem)");
     const progress = () => {
-      if (!ring || !mobile.matches) return
-      const max = document.documentElement.scrollHeight - innerHeight
+      if (!ring || !mobile.matches) return;
+      const max = document.documentElement.scrollHeight - innerHeight;
       ring.style.setProperty(
         "--progress",
         String(max > 0 ? Math.min(scrollY / max, 1) : 0),
-      )
-    }
-    addEventListener("scroll", progress, { passive: true })
-    mobile.addEventListener("change", progress)
-    progress()
+      );
+    };
+    addEventListener("scroll", progress, { passive: true });
+    mobile.addEventListener("change", progress);
+    progress();
 
-    const seen = new Map<string, number>()
-    const links = new Map<Element, HTMLAnchorElement>()
+    const seen = new Map<string, number>();
+    const links = new Map<Element, HTMLAnchorElement>();
     for (const a of nav.querySelectorAll<HTMLAnchorElement>("a[href^='#']")) {
-      const id = hashId(a.hash)
-      const nth = seen.get(id) ?? 0
-      seen.set(id, nth + 1)
-      const target = document.querySelectorAll(`[id="${CSS.escape(id)}"]`)[nth]
-      if (target) links.set(target, a)
+      const id = hashId(a.hash);
+      const nth = seen.get(id) ?? 0;
+      seen.set(id, nth + 1);
+      const target = document.querySelectorAll(`[id="${CSS.escape(id)}"]`)[nth];
+      if (target) links.set(target, a);
     }
-    const articles = document.querySelectorAll("main article")
-    const list = nav.querySelector(":scope > ul")
-    const title = nav.querySelector("toc-title")
-    const currentLabel = nav.querySelector("toc-current")
-    const toggle = nav.querySelector<HTMLInputElement>("input")
-    const heading = document.querySelector("article > header h1")
-    if (articles.length === 0 || !list || links.size === 0) return
+    const articles = document.querySelectorAll("main article");
+    const list = nav.querySelector(":scope > ul");
+    const title = nav.querySelector("toc-title");
+    const currentLabel = nav.querySelector("toc-current");
+    const toggle = nav.querySelector<HTMLInputElement>("input");
+    const heading = document.querySelector("article > header h1");
+    if (articles.length === 0 || !list || links.size === 0) return;
 
-    const fallback = currentLabel?.textContent ?? ""
+    const fallback = currentLabel?.textContent ?? "";
 
     const scrollPaddingTop =
       Number.parseFloat(
         getComputedStyle(document.documentElement).scrollPaddingBlockStart,
-      ) || 0
+      ) || 0;
 
     const groups = [
       ...nav.querySelectorAll<HTMLDetailsElement>("li[data-group] details"),
     ].map((details) => ({
       details,
       active: details.open,
-      anchors: [
-        ...details.querySelectorAll<HTMLAnchorElement>("a[href^='#']"),
-      ],
-    }))
+      anchors: [...details.querySelectorAll<HTMLAnchorElement>("a[href^='#']")],
+    }));
 
-    const blockOf = new Map<Element, Element>()
+    const blockOf = new Map<Element, Element>();
     for (const target of links.keys()) {
-      const block = target.closest("prose-content > *, article[data-url]")
-      if (block && !blockOf.has(block)) blockOf.set(block, target)
+      const block = target.closest("prose-content > *, article[data-url]");
+      if (block && !blockOf.has(block)) blockOf.set(block, target);
     }
 
-    const sectionOf = new Map<Element, Element>()
+    const sectionOf = new Map<Element, Element>();
     for (const article of articles) {
-      let current = blockOf.get(article)
+      let current = blockOf.get(article);
       for (const child of article.children) {
         if (child.tagName === "PROSE-CONTENT") {
           for (const block of child.children) {
-            current = blockOf.get(block) ?? current
-            if (current) sectionOf.set(block, current)
+            current = blockOf.get(block) ?? current;
+            if (current) sectionOf.set(block, current);
           }
-        } else if (current) sectionOf.set(child, current)
+        } else if (current) sectionOf.set(child, current);
       }
     }
 
-    const visible = new Set<Element>()
-    let prevActive = new Set<Element>()
+    const visible = new Set<Element>();
+    let prevActive = new Set<Element>();
 
     const center = () => {
       const run = [
         ...list.querySelectorAll<HTMLAnchorElement>("a[data-active]"),
-      ]
-      const first = run[0]
-      const last = run[run.length - 1]
-      if (!first || !run.every((a) => a.checkVisibility())) return
-      const area = list.getBoundingClientRect()
+      ];
+      const first = run[0];
+      const last = run[run.length - 1];
+      if (!first || !run.every((a) => a.checkVisibility())) return;
+      const area = list.getBoundingClientRect();
       const runCenter =
         (first.getBoundingClientRect().top +
           last.getBoundingClientRect().bottom) /
-        2
+        2;
       list.scrollTo({
         top: list.scrollTop + runCenter - (area.top + area.height / 2),
-      })
-    }
+      });
+    };
 
     toggle?.addEventListener("change", () => {
-      if (toggle.checked) center()
-    })
+      if (toggle.checked) center();
+    });
     list.addEventListener("click", (event) => {
       if (toggle && (event.target as Element).closest?.("a")) {
-        toggle.checked = false
+        toggle.checked = false;
       }
-    })
+    });
 
     const observerOptions = {
       rootMargin: `-${scrollPaddingTop}px 0px 0px`,
-    }
+    };
     const observer = new IntersectionObserver((entries) => {
       for (const entry of entries) {
         if (entry.target === heading) {
-          const past = !entry.isIntersecting
-          title?.toggleAttribute("data-visible", past)
-        } else if (entry.isIntersecting) visible.add(entry.target)
-        else visible.delete(entry.target)
+          const past = !entry.isIntersecting;
+          title?.toggleAttribute("data-visible", past);
+        } else if (entry.isIntersecting) visible.add(entry.target);
+        else visible.delete(entry.target);
       }
 
-      const activeTargets = new Set<Element>()
+      const activeTargets = new Set<Element>();
       for (const block of visible) {
-        const target = sectionOf.get(block)
-        if (target) activeTargets.add(target)
+        const target = sectionOf.get(block);
+        if (target) activeTargets.add(target);
       }
 
-      let firstActive: HTMLAnchorElement | undefined
+      let firstActive: HTMLAnchorElement | undefined;
       for (const [target, link] of links) {
-        const on = activeTargets.has(target)
-        link.toggleAttribute("data-active", on)
-        link.removeAttribute("aria-current")
-        if (on) firstActive ??= link
+        const on = activeTargets.has(target);
+        link.toggleAttribute("data-active", on);
+        link.removeAttribute("aria-current");
+        if (on) firstActive ??= link;
       }
-      firstActive?.setAttribute("aria-current", "location")
+      firstActive?.setAttribute("aria-current", "location");
 
       if (currentLabel) {
-        const label = firstActive?.textContent?.trim() || fallback
-        if (currentLabel.textContent !== label) currentLabel.textContent = label
+        const label = firstActive?.textContent?.trim() || fallback;
+        if (currentLabel.textContent !== label)
+          currentLabel.textContent = label;
       }
 
       for (const group of groups) {
-        const active = group.anchors.some((a) => a.hasAttribute("data-active"))
+        const active = group.anchors.some((a) => a.hasAttribute("data-active"));
         if (active !== group.active) {
-          group.active = active
-          if (active) group.details.open = true
+          group.active = active;
+          if (active) group.details.open = true;
         }
       }
 
-      let grew = false
+      let grew = false;
       for (const target of activeTargets) {
         if (!prevActive.has(target)) {
-          grew = true
-          break
+          grew = true;
+          break;
         }
       }
-      prevActive = activeTargets
-      if (grew) center()
-    }, observerOptions)
+      prevActive = activeTargets;
+      if (grew) center();
+    }, observerOptions);
 
-    for (const block of sectionOf.keys()) observer.observe(block)
+    for (const block of sectionOf.keys()) observer.observe(block);
     if (heading) {
-      observer.observe(heading)
+      observer.observe(heading);
     } else {
-      title?.toggleAttribute("data-visible", true)
+      title?.toggleAttribute("data-visible", true);
     }
-  })()
+  })();
 </script>
