@@ -1,8 +1,6 @@
 import type { SvgComponent } from "astro/types";
 import Email from "@/assets/icons/email.svg";
 import GitHub from "@/assets/icons/github.svg";
-import RSS from "@/assets/icons/rss.svg";
-import Twitter from "@/assets/icons/twitter.svg";
 
 export const SITE = {
   title: "Zach Joe",
@@ -19,8 +17,6 @@ export const NAVIGATION = [
 ];
 
 export const SOCIALS: { href: string; label: string; icon: SvgComponent }[] = [
-  { href: "https://github.com/jktrn", label: "GitHub", icon: GitHub },
-  { href: "https://twitter.com/enscrbe", label: "Twitter", icon: Twitter },
-  { href: "mailto:jason@enscribe.dev", label: "Email", icon: Email },
-  { href: "/rss.xml", label: "RSS", icon: RSS },
+  { href: "https://github.com/zach-joe", label: "GitHub", icon: GitHub },
+  { href: "mailto:zach.jl@proton.me", label: "Email", icon: Email },
 ];

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="1000"><metadata><rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"><rdf:Description><dc:creator>RealFaviconGenerator</dc:creator><dc:source>https://realfavicongenerator.net</dc:source></rdf:Description></rdf:RDF></metadata><style>
+    #light-icon {
+      display: inline;
+    }
+    #dark-icon {
+      display: none;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      #light-icon {
+        display: none;
+      }
+      #dark-icon {
+        display: inline;
+      }
+    }
+  </style><g id="light-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="1000"><g><g transform="matrix(1.9011406844106464,0,0,1.9011406844106464,0,0)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="277 277 526 526" width="526" height="526"><circle cx="540" cy="540" r="263" fill="#000"></circle><path fill="#fff" fill-rule="evenodd" d="M415 400H670C678 400 684 409 676 416L597 496L552 662H662A9 9 0 0 1 662 680H408C400 680 396 671 403 664L482 585L526 418H415A9 9 0 0 1 415 400Z M545 418H649L507 560Z M571 521L534 662H430Z"></path></svg></g></g></svg></g><g id="dark-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="1000"><g clip-path="url(#SvgjsClipPath1004)"><rect width="1000" height="1000" fill="#ffffff"></rect><g transform="matrix(1.3307984790874525,0,0,1.3307984790874525,150,150)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="277 277 526 526" width="526" height="526"><circle cx="540" cy="540" r="263" fill="#000"></circle><path fill="#fff" fill-rule="evenodd" d="M415 400H670C678 400 684 409 676 416L597 496L552 662H662A9 9 0 0 1 662 680H408C400 680 396 671 403 664L482 585L526 418H415A9 9 0 0 1 415 400Z M545 418H649L507 560Z M571 521L534 662H430Z"></path></svg></g></g><defs><clipPath id="SvgjsClipPath1004"><rect width="1000" height="1000" x="0" y="0" rx="350" ry="350"></rect></clipPath></defs></svg></g></svg>
